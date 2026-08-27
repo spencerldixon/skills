@@ -6,43 +6,48 @@ A collection of skills for development and workflow.
 
 | Skill | Description |
 | --- | --- |
-| [ticket-writing](ticket-writing/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket temaplte. |
+| [ticket-writing](ticket-writing/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 
 ## Install
 
-Clone the repository once:
+Run the installer from an interactive terminal:
 
 ```sh
-mkdir -p "$HOME/.local/share"
-git clone https://github.com/spencerdixon/skills.git "$HOME/.local/share/spencerdixon-skills"
+curl -fsSL https://raw.githubusercontent.com/spencerldixon/skills/main/install.sh | bash
 ```
 
-### Codex
+It asks whether to install the skills for Codex, Claude Code, or both. The installer:
+
+- Clones `https://github.com/spencerldixon/skills` to
+  `~/.local/share/spencerldixon-skills`.
+- Creates a symlink for every skill in `~/.agents/skills` for Codex,
+  `~/.claude/skills` for Claude Code, or both.
+- Safely refreshes the clone and symlinks when run again.
+
+To skip the prompt, pass `codex`, `claude`, or `both`:
 
 ```sh
-mkdir -p "$HOME/.agents/skills"
-ln -s "$HOME/.local/share/spencerdixon-skills/ticket-writing" "$HOME/.agents/skills/ticket-writing"
+curl -fsSL https://raw.githubusercontent.com/spencerldixon/skills/main/install.sh | bash -s -- both
 ```
-
-Invoke it with `$ticket-writing`.
-
-### Claude Code
-
-```sh
-mkdir -p "$HOME/.claude/skills"
-ln -s "$HOME/.local/share/spencerdixon-skills/ticket-writing" "$HOME/.claude/skills/ticket-writing"
-```
-
-Invoke it with `/ticket-writing`.
-
-Restart Codex or Claude Code if the new skill does not appear automatically.
 
 ## Update
 
-Pull the latest version into the shared clone:
+Run the installer again. It pulls updates with `--ff-only` and adds symlinks for any
+new skills:
 
 ```sh
-git -C "$HOME/.local/share/spencerdixon-skills" pull --ff-only
+curl -fsSL https://raw.githubusercontent.com/spencerldixon/skills/main/install.sh | bash
 ```
 
-Because both installations are symlinks, the updated skill is available to Codex and Claude Code without copying it again. Restart the agent if it does not detect the change.
+## Uninstall
+
+Run the uninstaller to remove the Codex and Claude Code symlinks created by the
+installer, then remove the shared repository clone:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/spencerldixon/skills/main/uninstall.sh | bash
+```
+
+The uninstaller only removes symlinks pointing into the managed clone and verifies
+the repository origin before deleting it. It is safe to run again after the skills
+have already been removed.
