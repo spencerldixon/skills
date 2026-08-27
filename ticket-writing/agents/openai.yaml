@@ -1,0 +1,5 @@
+interface:
+  display_name: "Ticket Writing"
+  short_description: "Research and write clear Jira tickets"
+  default_prompt: "Use $ticket-writing to interview me, research the relevant code, and create a Jira-ready Markdown ticket."
+
