@@ -22,6 +22,7 @@ Use short, focused rounds of questions rather than one large questionnaire. Reus
 - Whether this is ordinary delivery work, a bug, or a spike.
 - Known facts, suspected causes, examples, reproduction steps, constraints, dependencies, and anything out of scope.
 - Existing resources, including screenshots, designs, documentation, Jira tickets, pull requests, and URLs.
+- If Slack notifications are in scope, ask for a permalink to a representative Slack message for the ticket's Resources section. Accept a screenshot when a permalink cannot be shared, and do not ask again when suitable evidence has already been supplied.
 - What must be true when the work is done and what proof is expected.
 - Which repository or repositories contain the relevant code.
 - The Markdown output path. Suggest a slugified ticket title in the current directory when the user has no preference.
