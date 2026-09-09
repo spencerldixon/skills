@@ -7,25 +7,7 @@ A collection of skills for development and workflow.
 | Skill | Description |
 | --- | --- |
 | [ticket-writing](ticket-writing/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
-| [explain-this](explain-this/SKILL.md) | Explains a ticket, file, or codebase concept in plain English with context, practical examples, numbered steps, and verified line references. |
-
-## Explain a ticket or codebase concept
-
-After installation, invoke `explain-this` with a file, ticket, or question:
-
-```text
-$explain-this app/models/order.rb
-$explain-this Explain the ticket in tickets/order-confirmation.md
-$explain-this How does signing in work, and why are the pieces split this way?
-```
-
-In Claude Code, use `/explain-this` with the same inputs. You can omit the input
-when the conversation already identifies what you want explained.
-
-The skill researches the relevant code, confirms any assumptions with you, and
-explains the workflow as if you were a junior developer on your first day. It
-starts with who uses the feature and why it exists, defines unfamiliar terms,
-and flags unknowns with suggested people or roles to ask.
+| [explain-this](explain-this/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
 
 ## Install
 
