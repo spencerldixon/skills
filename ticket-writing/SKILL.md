@@ -77,6 +77,7 @@ Follow the packaged guide closely:
 - Prefix bug titles with `[BUG]` and spike titles with `[SPIKE]`.
 - Explain the user and service context in plain English before technical detail.
 - Write for a junior developer on their first day and define unfamiliar terms.
+- Use ASD-STE100 simplified technical english for technical sections.
 - Make the title understandable without opening the ticket.
 - Include reproduction steps, known facts, suspected causes, constraints, implementation starting points, testing expectations, open questions, and out-of-scope boundaries when relevant.
 - If no resources exist, retain the Resources section and say `No additional resources were supplied.`

@@ -59,6 +59,7 @@ Unresolved details that the explanation does not depend on may remain as explici
 - Use a friendly, encouraging tone and an occasional useful analogy. Map the analogy back to the real components and say where it stops fitting if that matters. Avoid baby talk, forced jokes, and words such as “obviously” or “just” that make difficulty sound like the reader's fault.
 - Quote code only when a small excerpt teaches something prose cannot. Explain what the excerpt does and why it matters; label pseudocode and illustrative code clearly. Do not narrate every line or paste entire functions.
 - Give clickable file links with verified line numbers beside the relevant step or claim. Use absolute local paths with a single line anchor and a readable label containing the filename and line number. Use verified remote line links when only remote source is available. Never invent a path, line number, or link.
+- Use ASD-STE100 simplified technical english for technical sections.
 
 ## 5. Shape the explanation for skimming
 
