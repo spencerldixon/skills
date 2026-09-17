@@ -8,6 +8,7 @@ A collection of skills for development and workflow.
 | --- | --- |
 | [ticket-writing](ticket-writing/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [explain-this](explain-this/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
+| [pr-summary](pr-summary/) | Writes a clear PR title and summary using the included template, with an optional Jira ticket and a deployment risk rating. |
 
 ## Install
 
