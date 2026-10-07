@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explain"
+  short_description: "Understand tickets and code, one step at a time"
+  default_prompt: "Use $explain to research this ticket, file, or codebase concept, confirm assumptions with me, and explain how and why it works in plain English with numbered steps, examples, and line references."

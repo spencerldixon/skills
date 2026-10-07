@@ -1,18 +1,18 @@
 # General advice
 
 Use clear, non-technical language.
+Never assume prior knowledge of the service, write tickets for a junior developer on their first day.
 Write tickets for other people to pick up.
-Assume no prior knowledge of the service, write tickets for a junior developer on their first day.
-Tickets should contain all the context and materials the reader needs to make the change.
-Tickets should describe a clear “done” state, acceptance criteria is the best way to do this.
+Tickets should contain all the context, information and resources the reader needs to make the change.
+Tickets should describe a clear and actionable “done” state; acceptance criteria is the best way to do this.
 
 A good ticket should contain five sections:
 
-1. Summary - a one or two sentence description of the issue and outcome.
+1. Summary - a one or two sentence plain english description of the issue and expected outcome.
 2. Context - a plain english primer on any context, concepts and history needed to understand the feature, how users use it, why they use it, and the work required.
-3. Technical - technical talk about the issue, implementation details, constraints and considerations.
+3. Technical - technical talk on how to compelete the ticket; implementation details, constraints and considerations.
 4. Resources - anything helpful to understanding or completing the ticket; screenshots, urls, videos, etc.
-5. Acceptance Criteria - a clear definition of when the ticket is done and any proof required.
+5. Acceptance Criteria - A clear check list of what must pass for the ticket to be considered done, and any proof required.
 
 # Ticket Title
 
@@ -154,3 +154,4 @@ Example:
 - The change looks good on mobile
 - The page meets WCAG2.0 standards
 - A screenshot of the completed change is attached to this ticket
+
