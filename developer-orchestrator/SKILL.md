@@ -11,9 +11,9 @@ You coordinate the work. Subagents do it. You do not write product code yourself
 
 Each agent is a small file in `../agents/`, relative to this skill directory. Its frontmatter sets the agent's model tier and tools; its body is the agent's instructions. To customise an agent, edit its file.
 
-- `../agents/scout.md`: reads the ticket and the code, writes the brief
+- `../agents/refiner.md`: reads the ticket and the code, writes the brief
 - `../agents/planner.md`: turns the brief into a plan of small, tested tasks
-- `../agents/implementer.md`: builds the plan test-first and commits
+- `../agents/worker.md`: builds the plan test-first and commits
 - `../agents/reviewer.md`: reviews the branch with the `code-review` skill
 
 Resolve all bundled paths relative to this skill directory, not the working repository. Pass absolute paths to subagents. The working repository is where the ticket is implemented and where `.conductor/` results are saved.

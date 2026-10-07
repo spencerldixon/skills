@@ -1,6 +1,6 @@
 ---
-name: implementer
-description: Builds the plan test-first and commits each task
+name: worker
+description: Takes a plan and implements it
 tier: mid
 tools: full
 ---

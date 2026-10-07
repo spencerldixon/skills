@@ -8,6 +8,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | --- | --- |
 | [developer-orchestrator](developer-orchestrator/) | Works a ticket end to end with subagents (scout, planner, implementer, reviewer), and stops for your approval after the plan and before the pull request. |
 | [code-review](code-review/) | Reviews a branch or diff for real problems, each with a concrete failure scenario, and gives a pass or changes-needed verdict. |
+| [designer](designer/) | Designs minimalist interfaces with Basecoat UI and Tailwind, with accessibility, responsive layout, copy, performance, and SEO checks. |
 | [find-available-work](find-available-work/) | Finds unassigned Ready to Start tickets on Jira board 155 and rates clarity and complexity to help you choose your next ticket. |
 | [ticket-writing](ticket-writing/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [explain](explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
@@ -60,6 +61,8 @@ codex plugin add spencerldixon-skills@spencerldixon
 
 ```sh
 pi install git:github.com/spencerldixon/skills
+
+pi update git:github.com/spencerldixon/skills
 ```
 
 ## Upgrading from the install script
