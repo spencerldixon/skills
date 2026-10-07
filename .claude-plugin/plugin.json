@@ -1,0 +1,17 @@
+{
+  "name": "spencerldixon-skills",
+  "version": "0.2.0",
+  "description": "Skills for engineering work: a conductor that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries",
+  "author": {
+    "name": "Spencer Dixon"
+  },
+  "repository": "https://github.com/spencerldixon/skills",
+  "skills": [
+    "./developer-orchestrator",
+    "./code-review",
+    "./find-available-work",
+    "./ticket-writing",
+    "./explain",
+    "./pr-summary"
+  ]
+}

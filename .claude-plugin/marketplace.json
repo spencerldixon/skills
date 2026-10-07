@@ -1,0 +1,14 @@
+{
+  "name": "spencerldixon",
+  "description": "Spencer Dixon's skills",
+  "owner": {
+    "name": "Spencer Dixon"
+  },
+  "plugins": [
+    {
+      "name": "spencerldixon-skills",
+      "source": "./",
+      "description": "Skills for engineering work: a conductor that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries"
+    }
+  ]
+}

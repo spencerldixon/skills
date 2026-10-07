@@ -1,9 +1,9 @@
 ---
-name: explain-this
+name: explain
 description: Research and explain a ticket, file, feature, or codebase concept for a junior developer on their first day. Use for onboarding, code walkthroughs, and understanding how and why code fits together, with plain English, practical examples, numbered steps, and verified line references. Accept an optional file, ticket, or natural-language prompt; use conversation context when omitted. This is an explanation workflow, not ticket drafting or implementation.
 ---
 
-# Explain This
+# Explain
 
 Help the reader build a mental model they can reuse: why this exists, who needs it, what happens, where it happens, and why the pieces are arranged this way. Assume a junior developer on their first day with no product knowledge, limited familiarity with code, and a short attention span.
 

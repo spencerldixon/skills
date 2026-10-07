@@ -1,6 +1,6 @@
-# Explain This
+# Explain
 
-`explain-this` helps explain a ticket, file, or codebase concept in plain english.
+`explain` helps explain a ticket, file, or codebase concept in plain english.
 
 It follows these steps:
 
@@ -24,15 +24,15 @@ what you want explained.
 ### Codex
 
 ```text
-$explain-this app/models/order.rb
-$explain-this Explain the ticket in tickets/order-confirmation.md
-$explain-this How does signing in work, and why are the pieces split this way?
+$explain app/models/order.rb
+$explain Explain the ticket in tickets/order-confirmation.md
+$explain How does signing in work, and why are the pieces split this way?
 ```
 
 ### Claude Code
 
 ```text
-/explain-this app/models/order.rb
-/explain-this Explain the ticket in tickets/order-confirmation.md
-/explain-this How does signing in work, and why are the pieces split this way?
+/explain app/models/order.rb
+/explain Explain the ticket in tickets/order-confirmation.md
+/explain How does signing in work, and why are the pieces split this way?
 ```
