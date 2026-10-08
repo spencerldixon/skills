@@ -42,3 +42,11 @@ Show the table in the first substantive response. Start with the match count and
 Use real keys and the verified site for links; otherwise use plain keys. One row per ticket, no scoring essays. Add a short footnote for provisional scores when used.
 
 End with: **Which ticket would you like to pick up?**
+
+## Language
+
+Write in Simplified Technical English.
+
+Build the user's knowledge. When you use a concept, decision or file that may be new to them, say what it is and why it matters, in one sentence.
+
+Be concise. Put the answer or decision first. Cut every word that does not help the user act or learn.

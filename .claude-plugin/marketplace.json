@@ -8,7 +8,7 @@
     {
       "name": "spencerldixon-skills",
       "source": "./",
-      "description": "Skills for engineering work: a conductor that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries"
+      "description": "Skills for engineering work: an engineer workflow that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries"
     }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review a branch or diff for real problems, each with a concrete failure scenario, and give a pass or changes-needed verdict. Use when asked to review code, a diff, a branch or a pull request, or when acting as the reviewer in the conductor workflow.
+description: Review a branch or diff for real problems, each with a concrete failure scenario, and give a pass or changes-needed verdict. Use when asked to review code, a diff, a branch or a pull request, or when acting as the reviewer in the engineer workflow.
 ---
 
 # Code review
@@ -35,3 +35,11 @@ Report only real problems. Style preferences are not findings. Write each findin
 - **Fix:** what to change
 
 End with a verdict: `pass` if there are no blocking findings, otherwise `changes needed`. If you found nothing, say so plainly rather than inventing findings.
+
+## Language
+
+Write in Simplified Technical English.
+
+Build the user's knowledge. When you use a concept, decision or file that may be new to them, say what it is and why it matters, in one sentence.
+
+Be concise. Put the answer or decision first. Cut every word that does not help the user act or learn.

@@ -1,6 +1,6 @@
-# Ticket Writing
+# Write Ticket
 
-`ticket-writing` is a skill for creating clear, self-contained Jira tickets in a preferred format.
+`write-ticket` is a skill for creating clear, self-contained Jira tickets in a preferred format.
 
 It follows these steps:
 
@@ -44,7 +44,7 @@ You do not need to know the technical solution. The skill researches the code, s
 ### Codex
 
 ```text
-$ticket-writing Help me write a ticket for this work.
+$write-ticket Help me write a ticket for this work.
 ```
 
 Codex may also select the skill automatically when you ask it to draft or improve a Jira ticket.
@@ -52,7 +52,7 @@ Codex may also select the skill automatically when you ask it to draft or improv
 ### Claude Code
 
 ```text
-/ticket-writing Help me write a ticket for this work.
+/write-ticket Help me write a ticket for this work.
 ```
 
 Claude Code may also select the skill automatically when your request matches its description.

@@ -67,3 +67,13 @@ Target **WCAG 2.2 AA**; the following checks are a baseline, not a complete conf
 Run the project's build, lint, and relevant tests. Inspect the rendered page at mobile and desktop sizes. Test keyboard navigation, form errors, empty/loading states, and key screen-reader interactions; run automated accessibility checks and Lighthouse on a production build when tools permit. Fix regressions rather than optimizing a score by hiding content or removing accessibility.
 
 Report changed files, checks actually run, measured scores with page and test conditions, any custom CSS exception, and remaining limitations. If browser, audit, or assistive-technology tools are unavailable, state what remains unverified. Never invent results.
+
+## Language
+
+Write in Simplified Technical English.
+
+Build the user's knowledge. When you use a concept, decision or file that may be new to them, say what it is and why it matters, in one sentence.
+
+Be concise. Put the answer or decision first. Cut every word that does not help the user act or learn.
+
+This applies to what you write to the user. The Copy section covers text in the interface.

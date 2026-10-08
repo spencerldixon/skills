@@ -1,9 +1,9 @@
 ---
-name: ticket-writing
+name: write-ticket
 description: Interview the user, research the relevant code, and write or improve a Jira ticket in the team's preferred format before saving it as Markdown. Use for Jira ticket drafting and refinement, not for implementing the ticket or changing Jira itself.
 ---
 
-# Ticket Writing
+# Write Ticket
 
 Create a Jira-ready Markdown ticket that another developer can pick up without prior knowledge of the service.
 
