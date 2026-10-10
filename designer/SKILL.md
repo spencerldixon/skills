@@ -20,6 +20,7 @@ Build the smallest interface that makes the user's next action clear. Preserve u
 - Use semantic HTML for document structure and Tailwind utilities for layout, spacing, typography, responsiveness, and states. Basecoat's documented component classes are allowed and are not custom CSS.
 - Start with Basecoat's theme tokens. Custom CSS should normally be zero. A small central token override for a brand accent and its contrasting foreground is an acceptable exception. Explain every exception; avoid custom layout classes, CSS modules, inline presentation styles, and `@apply` wrappers. Do not hide a stylesheet in repeated arbitrary-value utilities.
 - Compose existing components. If Basecoat lacks the required interaction, explain the gap and ask before introducing a custom component or dependency.
+- Before a required approval, prepare the concrete proposal and follow [human-review.md](../references/human-review.md) to open it in Neovim in a new Ghostty tab. Reuse prior authorization; this adds no approval gate.
 - Retain documented semantics, ARIA attributes, and initialization. Load only the Basecoat scripts needed for the chosen interactions, using the project's asset pipeline.
 
 ## Design rules from the references

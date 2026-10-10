@@ -6,38 +6,40 @@ Skills for engineering work, for Claude Code, Codex and pi.
 
 | Skill | Description |
 | --- | --- |
-| [engineer](engineer/) | Works a ticket end to end with subagents (planner, implementor, reviewer), and stops for your approval after the plan and for your own check with a walkthrough. |
+| [engineer](engineer/) | Implements bounded fixes with an implementor and independent reviewer; adds planning and approval when material decisions need them. |
 | [code-review](code-review/) | Reviews a branch or diff for real problems, each with a concrete failure scenario, and gives a pass or changes-needed verdict. |
 | [designer](designer/) | Designs minimalist interfaces with Basecoat UI and Tailwind, with accessibility, responsive layout, copy, performance, and SEO checks. |
 | [find-available-work](find-available-work/) | Finds unassigned Ready to Start tickets on Jira board 155 and rates clarity and complexity to help you choose your next ticket. |
 | [write-ticket](write-ticket/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [explain](explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
 | [pr-summary](pr-summary/) | Writes a clear PR title and summary using the included template, with an optional Jira ticket and a deployment risk rating. |
-| [walkthrough](walkthrough/) | Writes a step-by-step guide, with exact URLs, clicks and expected results, so a person can check a change or reproduce a bug in the browser themselves. |
+| [walkthrough](walkthrough/) | Writes a short human check for a browser, native application, or API, with exact actions and visible results. |
 | [ship-it](ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, and moves the ticket to In Review. |
 
 ## The engineer workflow
 
-Ask your agent to work a ticket, for example "use the engineer skill on PROJ-123" with the ticket pasted in, as a file, or as a Jira key. The engineer coordinates and never writes product code itself:
+Ask for a ticket implementation or a bounded fix. The engineer delegates product code and preserves existing work:
 
-1. **Planner** (frontier model) reads the ticket and the code, and writes a plan a cheaper model can follow: numbered acceptance criteria, a code map, the exact test and lint commands, and small test-first tasks. **You approve the plan.**
-2. **Implementor** (mid-tier model) builds the plan test-first. It does not commit.
-3. The engineer runs the tests and linter itself, and sends failures back to the implementor.
-4. **Reviewer** reviews the change with the `code-review` skill. Blocking findings go back to the implementor.
-5. **Reviewer** writes a step-by-step guide with the `walkthrough` skill. **You follow it and confirm the change works**, or report the step that failed.
-6. The engineer asks whether to ship, and on yes runs `ship-it`.
+1. **Clear fix:** implementor builds it, the coordinator verifies, and an independent reviewer checks it.
+2. **Uncertain design:** planner first writes a concise plan. Approval is needed only for material unapproved decisions or an explicitly requested plan gate.
+3. **Unverified UI/device behavior:** reviewer supplies a short human check. Required approval/check documents open automatically in Neovim in a new Ghostty tab.
+4. Publish only with authorization; `ship-it` handles its stated external actions.
 
-Each step's output is saved in `~/Rails/trade-tariff/tickets/<KEY>/`, outside the repo.
+Reports are written once. Agents start with fresh context, receive file paths, and return a path plus a short outcome. The coordinator keeps verification and decisions in one `status.md`.
+
+Artifacts default to `~/.local/state/engineer/<repo>/<task-id>/`, outside the repository. Set `ENGINEER_ARTIFACT_ROOT` or supply a directory to change it. No Jira key is required for local work. Dirty trees are recorded and preserved; only ambiguous or conflicting edits require a decision.
 
 ### Customising the agents
 
-The agents are small files in [`agents/`](agents/). Each one's frontmatter sets its model tier (`small`, `mid` or `frontier`) and its tools (`read-only` or `full`). The body is its instructions. Edit a file to change an agent.
+[`agents/`](agents/) contains the planner, implementor, and reviewer instructions. `tools: report-only` means product files are read-only but the assigned report can be written; `tools: full` permits authorized implementation. These definitions are prompts, not an executable runner or enforced sandbox. Configure runner permissions to match.
 
-The steps, approval gates, and tier-to-model table are in [`engineer/SKILL.md`](engineer/SKILL.md), with a model column each for Claude Code, pi and Codex. To add an agent, add a file in `agents/` and a step in the engineer skill.
+The runtime's default model is used unless an available model is configured per role. There are no implied model tiers or claimed savings. A cheaper implementor can suit a precise task; preserve independent review and stronger reasoning where uncertainty matters.
 
-Skills provide reusable instructions, agents define roles, and the engineer skill connects them. These are prompt-based definitions, not an executable runner.
+Keep repository-specific commands and conventions in each repo's `AGENTS.md`. The workflow and role reports should reference facts once, not repeat the conversation.
 
-Put repo-specific rules, such as test commands, conventions and known traps, in each repo's `AGENTS.md` rather than in the agents. Every subagent reads it.
+### Opening human review documents
+
+Before a required approval or human check, open the document in Neovim in a new Ghostty tab using the short command in [`references/human-review.md`](references/human-review.md). If macOS automation is blocked, report that and link the file. No helper scripts or synchronization step are needed.
 
 ## Install
 
@@ -85,7 +87,8 @@ The uninstaller only removes links that point into its clone at `~/.local/share/
 .agents/plugins/         Codex marketplace
 package.json             pi package manifest
 <name>/SKILL.md          reusable skills and orchestrators (Agent Skills format)
-agents/<role>.md        shared agent roles, model tiers and tool settings
+agents/<role>.md        shared agent roles and write scopes
+references/             shared human review procedure
 uninstall.sh             removes installs made by the old install script
 ```
 

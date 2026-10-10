@@ -121,6 +121,8 @@ Write the final reviewed draft to the agreed `.md` path. Treat the request to us
 
 If the destination exists, stop and ask whether to overwrite it or use a different path. Do not silently replace it.
 
+For this or another approval decision, save the proposed result separately and follow [human-review.md](../references/human-review.md): open it in Neovim in a new Ghostty tab before asking. This does not add a gate to ordinary ticket drafting or clarification.
+
 After saving, provide:
 
 - A clickable link to the Markdown file.

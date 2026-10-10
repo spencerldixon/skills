@@ -34,7 +34,9 @@ Report only real problems. Style preferences are not findings. Write each findin
 - **Severity:** `blocking` (should stop the merge) or `non-blocking`
 - **Fix:** what to change
 
-End with a verdict: `pass` if there are no blocking findings, otherwise `changes needed`. If you found nothing, say so plainly rather than inventing findings.
+End the report with a verdict: `pass` if there are no blocking findings, otherwise `changes needed`. If you found nothing, normally use at most 100 words: verdict, meaningful verification evidence, and material limitations. Do not restate each acceptance criterion or invent findings.
+
+When given an artifact path, write the report there once and return only its path, short verdict, and blockers. Otherwise return the report in chat. A deliberately pending human check is a verification limit, not an unmet implementation criterion. For a repair, review the corrected finding and nearby risks; broaden only when warranted.
 
 ## Language
 

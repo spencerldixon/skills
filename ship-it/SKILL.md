@@ -9,6 +9,8 @@ Turn the local work for a ticket into open pull requests, then tell Jira about t
 
 Use the GitHub MCP for pull requests and the Jira (Atlassian) MCP for the ticket. Load deferred tools with tool search. If the GitHub MCP is unavailable, use `gh`. The Jira site is `https://transformuk.atlassian.net`.
 
+Where this skill requires a decision, prepare the concrete scope or conflict document and follow [human-review.md](../references/human-review.md) to open it before asking. Invoking ship-it remains authorization for its stated actions; do not add another confirmation gate.
+
 ## 1. Find the ticket and the repositories
 
 - **Ticket key**, such as `HMRC-1234`: take it from the user's message, the conversation or the current branch name. If there is none, ask for it. Never invent one.
