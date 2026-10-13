@@ -1,6 +1,10 @@
 ---
 name: explain
-description: Research and explain a ticket, file, feature, or codebase concept for a junior developer on their first day. Use for onboarding, code walkthroughs, and understanding how and why code fits together, with plain English, practical examples, numbered steps, and verified line references. Accept an optional file, ticket, or natural-language prompt; use conversation context when omitted. This is an explanation workflow, not ticket drafting or implementation.
+description: Explain a ticket, file, feature, or codebase concept to a developer new to the codebase, walking one concrete example through numbered steps with verified line links. Use for onboarding, code walkthroughs, and "how does X work?" questions, not for writing tickets or code.
+argument-hint: "[file | ticket | question]"
+model: opus
+effort: medium
+allowed-tools: Bash(rg *) Bash(nl *) Bash(git log *) Bash(git show *) Bash(git blame *)
 ---
 
 # Explain
