@@ -1,157 +1,104 @@
-# General advice
+# What a good ticket is
 
-Use clear, non-technical language.
-Never assume prior knowledge of the service, write tickets for a junior developer on their first day.
-Write tickets for other people to pick up.
-Tickets should contain all the context, information and resources the reader needs to make the change.
-Tickets should describe a clear and actionable “done” state; acceptance criteria is the best way to do this.
+A ticket tells someone else what to change, why, and how to prove it is done. That reader has only the ticket and the repository. They may be a junior developer on their first day in this codebase, or a coding agent.
 
-A good ticket should contain five sections:
+Both readers need the same thing: a short ticket in which every sentence matters. A developer stops reading a long ticket. An agent reads all of it and treats every passing remark as an instruction. So be surgical. Write what the reader needs to do the work and nothing else, in plain, human language.
 
-1. Summary - a one or two sentence plain english description of the issue and expected outcome.
-2. Context - a plain english primer on any context, concepts and history needed to understand the feature, how users use it, why they use it, and the work required.
-3. Technical - technical talk on how to compelete the ticket; implementation details, constraints and considerations.
-4. Resources - anything helpful to understanding or completing the ticket; screenshots, urls, videos, etc.
-5. Acceptance Criteria - A clear check list of what must pass for the ticket to be considered done, and any proof required.
+**Length.** A reader should take in a ticket in about two minutes. Aim for roughly 200–400 words for a small story or bug, and up to about 600 for a large change or a spike. If a draft is longer, cut it before you add anything. A long ticket usually means one of these:
 
-# Ticket Title
+- Facts the reader can see in the code.
+- Several sections that say the same thing.
+- Detail about how to do the work that the reader can work out for themselves.
 
-Write a short, specific title that explains the work to be done and the outcome, without having to open the ticket.
+**Language.** Plain English and short sentences. Define this product's domain terms and internal names, such as "commodity code", "geo area 1400" or "organization membership". Do not define everyday developer terms such as API, AWS, database, background job or system test.
 
-If a ticket is a bug or spike, prefix [BUG] or [SPIKE] to the front of the title.
+A ticket has these sections, in this order:
 
-A good title should:
+1. **Summary:** the problem and the outcome, in one to three sentences.
+2. **Context:** what the reader needs to understand about this feature, its users, and why the work matters.
+3. **Technical:** the specific changes to make, with their constraints and the reasons for any choices.
+4. **Resources:** useful links and attachments. Leave this section out if there are none.
+5. **Acceptance Criteria:** the checks that prove the work is done.
 
-- Make sense without opening the ticket
-- Be actionable
-- Not assume prior knowledge of the service or issue
-- Describe the outcome, not just the general topic
+# Title
 
-Bad examples - vague, no clear action or outcome:
+Short, specific and actionable, with one outcome. It must make sense without opening the ticket and must describe the outcome, not only the topic. If a title needs "and" to join two outcomes, consider whether there are two tickets. Put [BUG] or [SPIKE] at the front of the title for a bug or a spike.
 
-- Search page no search results error message
-- Job X keeps failing
-
-Good examples - specific, outcome defined, actionable:
-
-- Add a “no results found” message to the search page when no results are found
-- Job X failed on day Y with error Z, investigate, write report and open a new ticket for suggested fix.
+- Bad: "Search page no search results error message"
+- Good: "Add a 'No results found' message to the search page"
+- Good: "[SPIKE] Find out why job X failed on 3 March with error Z and raise a fix ticket"
 
 # 1. Summary
 
-In one or two sentences, clearly explain the problem and desired outcome of the ticket. Use plain, non-technical language.
+One to three sentences: what happens now, why it is a problem, and what the ticket changes.
 
-Write this for a junior developer on their first day who has no prior knowledge of the service.
-
-Include:
-
-- What is happening now
-- Why it’s a problem
-- What needs to be added, changed or removed
-- What the outcome of the ticket is 
-
-Example:
-
-When a user searches for a commodity here (url), and there are no matching results (search for xyz), the service currently displays an empty page. This doesn’t make it clear if the search completed successfully or if something went wrong. Update the page so that users are shown a clear message of “No results were found”, and what they can do next.
+> When a search has no matches, the search page is blank, so users can't tell whether it worked. Show "No results found for <term>" and a link back to the search box.
 
 # 2. Context
 
-In a short paragraph, explain any context, concepts, history, and terminology that helps a junior developer understand the role of this feature within the service.
-Explain why this feature exists, who uses it and how they use it.
-Use non-technical language and give practical examples of how a user would interact with this where possible
-This is a good opportunity to educate and build knowledge on how our users use the product.
-
-Include:
-
-- A brief history of the feature and why it exists
-- What the current behaviour is
-- Why the current behaviour is a problem
-- Who is affected and why
-- How the user benefits from the change this ticket implements
-
-Example:
-
-```
-Our users search for products to find their commodity code. That code is then used on customs declarations and helps determine what duties, taxes and measures apply to the goods they are trading.
-
-When searching for a commodity that doesn’t exist, a user currently gets a blank page. Without a clear message users could think that:
-
-The search has failed
-The page is still loading
-Their product cannot be classified
-They cannot continue their journey
-
-The page should explain the search completed successfully and help the user try again.
-```
+A short paragraph about this feature: who uses it, how, and why the current behaviour hurts them. Include history only when it explains a decision, for example "HMRC rejected sending XI users to the UK site because…". Do not introduce the whole product or the company.
 
 # 3. Technical
 
-Give the developer reading this ticket practical information needed to investigate and implement the change.
+State what has to change, and why. A reader should finish this section knowing where to make each change and what rule constrains it. Use only the parts below that the ticket needs. Most tickets need two or three of them.
 
-Include:
+- **Reproduce** (bugs): numbered steps with full links, then one line each for expected and actual behaviour.
+- **Changes:** a short numbered list of the specific changes. Each item names the one place to change, as a code link with a line number, and gives the reason when the reason is not obvious. Name the pattern to copy if there is one. Do not list every file the reader might open; they can find those.
+- **Constraints:** rules the change must follow that the reader might otherwise break, such as "admins only", "keep users on the XI site", "no new Go dependencies" or a repository convention. Give the reason in a few words.
+- **Suspected cause** (bugs and spikes, when the cause is not yet known): the likely explanations, with the evidence for each.
+- **Questions to answer** (spikes): numbered questions, the time box, and the deliverable. Say what to do if the time box ends with questions still open.
+- **How to find the evidence** (spikes and bugs that need logs or data): where to look, the exact query or filter to run, and what a match looks like. For example: the log group, a CloudWatch Logs Insights query filtering on `error_class`, and the fields that identify one job run. A reader who knows what they are looking for finishes the spike; one who doesn't, browses.
+- **Open questions:** only what the interview could not settle. Each one gives the default to use until someone answers. Most tickets have none.
+- **Out of scope:** only when the reader is likely to wander into related work, which is common in spikes. One line per item, without repeating anything said elsewhere.
 
-- Steps to reproduce
-- Links to pages featuring the issue (URLs are helpful in establishing a starting point of investigation)
-- Parameters for testing (helpful in reproducing the issue)
-- Known facts: what has been observed or confirmed
-- Suspected cause: theories that still require investigation
-- Open questions: decisions or unknowns that could affect the work
-- Implementation suggestions
-- Requirements to meet
-- Anything out of scope
+Write facts as plain statements. Do not prefix them with labels such as "Confirmed:", "Decided:" or "Assumption:". Put a decision where it applies, with its reason: "Keep the page on the XI site. HMRC agreed in March 2026 that sending traders to the UK site confuses them." Do not repeat one point in several places.
+
+Use full Markdown links wherever the reader will click: production and local URLs, code, pull requests and tickets. For example, [the XI geo area page](http://localhost:3001/xi/geographical_areas/1400) or [geographical_areas_controller.rb:12](https://github.com/org/repo/blob/main/app/controllers/geographical_areas_controller.rb#L12).
 
 Example:
 
 ```
-## Steps to reproduce:
+### Reproduce
 
-1. Open https://www.trade-tariff.service.gov.uk/find_commodity
-2. Enter ottnosearchresults
-3. Submit the search
-4. Observe the blank page (see screenshot in resources)
+1. Open [a search with no matches](http://localhost:3001/search?q=ottnoresultstest)
+2. Expected: "No results found for ottnoresultstest". Actual: a blank results area.
 
-## Helpful links:
-Commodity search page: https://www.trade-tariff.service.gov.uk/find_commodity
-Search route: https://www.trade-tariff.service.gov.uk/search?q={search-term}
-Example no results search: https://www.trade-tariff.service.gov.uk/search?q=ottnoresultstest7f3a91c2
+### Changes
 
-## Technical Requirements:
-No changes needed to the actual search.
-Add the copy "No results found for #{search term}, please try again" to the currently empty search results page
-Write a test to ensure this copy is present on the page when searching for a commodity that doesn't exist
-Ensure the change passes WCAG2.1
-Ensure the change looks good on mobile
-Mockup of the design can be found in the resources / attached to this ticket.
+1. Render a no-results message in [search/_results.html.erb:4](link) when `@results` is empty. Copy the empty state in [_no_measures.html.erb](link).
+2. Add a request spec next to [search_spec.rb](link).
+
+### Constraints
+
+- Do not change the search query. Only the empty state is wrong.
 ```
 
 # 4. Resources
 
-Add anything that could be helpful in understanding, completing or verifying the work.
-
-You can add:
-
-- Screenshots
-- Videos
-- Design or prototype links
-- Copy or assets
-- URLs to replicate the issue
-- Links to resources that may be helpful; stack overflow, blogs, github repos
-- Other tickets that may contain additional context or dependent work
-- Confluence documentation
+Links that help someone understand or check the work, each with a few words on why it matters: designs, screenshots, related tickets and pull requests, documentation. Leave the section out when there is nothing to add. Do not write "no resources were supplied" or "no screenshot available".
 
 # 5. Acceptance Criteria
 
-A clear definition of when the ticket is done and if any proof is required. 
-Acceptance criteria should be specific and testable. 
-Use checkboxes or bullet points. 
-Keep it short and sweet, do not overwhelm the developer, aim for around 3-5 acceptance criteria.
+Three to five checks. A human reviewer and a coding agent both use them to confirm the work is done, so each check must be one they can carry out without asking anyone:
 
-Example:
+- Something to observe at a linked URL, with the exact expected result.
+- A command that must pass.
+- A measurable fact, such as "one email is sent" or "the old link returns 'This invitation is not valid'".
 
-- A no-results message is shown when a search returns no matches
-- The submitted search term is included in the message
-- Add a test to ensure the message appears on the page when there are no search matches
-- The change looks good on mobile
-- The page meets WCAG2.0 standards
-- A screenshot of the completed change is attached to this ticket
+The criteria are the verification. Do not add a separate "How to verify" section that repeats them. Put all test expectations in one criterion: the suite command passes, including new tests for the named behaviour. Ask for tests only where they are useful.
 
+```
+- [ ] [A search with no matches](http://localhost:3001/search?q=ottnoresultstest) shows "No results found for ottnoresultstest".
+- [ ] A search with matches looks the same as before.
+- [ ] `bundle exec rspec` passes, including a new request spec for the no-results message.
+- [ ] A screenshot of the new message is attached to the ticket.
+```
+
+# Before saving
+
+- Could a reader act on this ticket in about two minutes of reading? If not, cut it.
+- Does every sentence change what the reader does or understands? Delete the rest, including notes about the writer's environment and statements that something is missing.
+- Does Technical name the specific changes and constraints, not a list of files?
+- Could an agent prove every acceptance criterion itself?
+- Is every Jira ticket and pull request linked, with a short note on why it is relevant?
+- Is everything true? Check that nothing is invented and that no suspicion is presented as a fact.

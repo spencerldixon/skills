@@ -1,131 +1,117 @@
 ---
 name: write-ticket
-description: Interview the user, research the relevant code, and write or improve a Jira ticket in the team's preferred format before saving it as Markdown. Use for Jira ticket drafting and refinement, not for implementing the ticket or changing Jira itself.
+description: Interview the user, research the code, and write or refine a short, precise ticket (story, bug or spike) that a developer new to the codebase, or a coding agent with no other context, can pick up and finish without asking questions. Starts from scratch or from an existing ticket, Jira issue or rough notes, and saves Markdown in the team's five-section format. Use for drafting, refining or tightening tickets, not for implementing them or changing Jira.
 ---
 
 # Write Ticket
 
-Create a Jira-ready Markdown ticket that another developer can pick up without prior knowledge of the service.
+The ticket is the whole briefing. Whoever picks it up gets the ticket and the repository, and nothing from this conversation.
 
-Before beginning the user-facing workflow, read [references/ticket_guide.md](references/ticket_guide.md) completely. Treat it as the ticket-writing rubric.
+Write for two readers at once:
 
-## Workflow
+- **A junior developer on their first day in this codebase.** They know general programming and common tools. They do not know this product's domain language, internal names or history.
+- **A coding agent.** It reads every word literally and acts on it. It fills gaps with guesses and follows asides as if they were instructions.
 
-### 1. Interview the user
+Both readers need the same ticket. It is short, and every sentence matters. It names the specific changes and the rules they must follow, and its acceptance criteria let the reader prove the work is done. Your job is mostly to decide what to leave out.
 
-Begin by interviewing the user. Do not research the code or draft the ticket until the user has had an opportunity to provide context.
+Read [references/ticket_guide.md](references/ticket_guide.md) before you start. It defines the sections, the length budget, the wording and the final checklist. You need no other file from this skill unless step 7 says so.
 
-Use short, focused rounds of questions rather than one large questionnaire. Reuse information already supplied and ask only for missing details that could improve the ticket. Establish:
+## 1. Find the starting point
 
-- The problem or opportunity, the current behaviour, and the desired outcome.
-- Who is affected, how they use the service, and why the work matters.
-- Whether this is ordinary delivery work, a bug, or a spike.
-- Known facts, suspected causes, examples, reproduction steps, constraints, dependencies, and anything out of scope.
-- Existing resources, including screenshots, designs, documentation, Jira tickets, pull requests, and URLs.
-- If Slack notifications are in scope, ask for a permalink to a representative Slack message for the ticket's Resources section. Accept a screenshot when a permalink cannot be shared, and do not ask again when suitable evidence has already been supplied.
-- What must be true when the work is done and what proof is expected.
-- Which repository or repositories contain the relevant code.
-- The Markdown output path. Suggest a slugified ticket title in the current directory when the user has no preference.
+**Refining an existing ticket.** The user may supply a file, pasted text, a Jira key or a link. Read it with the tools you have. Never infer a ticket's contents from its identifier. Then:
 
-Do not force the user to answer questions that code research can answer. Once there is enough information to identify useful research starting points, move on to research.
+- Tell the user in two or three sentences what you understand the ticket to ask for. A wrong reading is cheaper to fix now than after research.
+- Identify the gaps that only the user can fill, and ask about them in the interview.
+- Keep every fact, link and decision from the original that the reader needs. If you think something in the original is wrong, say so to the user rather than dropping it quietly.
 
-### 2. Research the code
+**Starting from scratch.** Ask what the problem is and what outcome the user wants, unless they have already said.
 
-Research the relevant workspace read-only. If the repository is not discoverable, ask the user for its location.
+## 2. Interview the user
 
-- Read applicable repository instructions and focused documentation.
-- Trace the current behaviour through relevant entry points, code, configuration, tests, schemas, and recent history.
-- Find practical starting points, existing patterns, likely tests, constraints, and related work.
-- Inspect referenced tickets or pull requests with available read-only tools when access permits.
-- Keep research proportional to the ticket. Do not implement the change, edit product code, create Jira issues, or modify pull requests.
+Interview the user before researching. Then research, and ask a second round of questions informed by the code. Two short rounds are usually enough.
 
-Maintain clear evidence boundaries:
+- **Ask only what only the user knows:** the outcome, why it matters, who it affects, scope, decisions already made, constraints, links, and what proof of done they expect. Do not ask what the code, history or documentation can answer.
+- **Keep rounds short:** three to five numbered questions, so the user can reply "1. yes 2. no, admins only".
+- **Suggest an answer when you can,** for example "I'd suggest a new link that lasts 7 days and makes the old one stop working. OK?". Confirming a suggestion is faster than writing an answer from nothing.
+- **Reuse what you already have.** Skip anything already answered.
 
-- **Confirmed:** directly supported by code, tests, history, accessible links, or user-provided evidence.
-- **Reported:** supplied by the user but not independently verified.
-- **Suspected:** a plausible explanation that still needs investigation.
-- **Open:** an unresolved decision or missing fact.
+By the end of the interview, know:
 
-Never turn suspected or open information into a stated fact.
+- The problem, the desired outcome, and why it matters.
+- Who is affected.
+- The ticket type: story, bug or spike. A spike is time-boxed investigation that produces findings, not a change to the product.
+- Examples, reproduction steps, URLs and error messages.
+- Decisions already made, and the reasons for them.
+- Scope.
+- Useful links: tickets, pull requests, designs and screenshots. If Slack notifications are in scope, ask for a permalink to a representative message.
+- What proves the work is done.
+- The repositories, if you cannot find them yourself.
+- The output path. If the user has no preference, suggest a slug of the title in the current directory.
 
-### 3. Clarify material gaps
+**When the user does not know.** Never fill a gap silently. Close it in this order:
 
-After research, explain only the findings needed to resolve meaningful gaps. Ask focused follow-up questions when an answer could change the outcome, scope, implementation constraints, or acceptance criteria.
+1. Research it.
+2. Propose a sensible default in the next round, and write it into the ticket as a plain requirement once the user agrees.
+3. If it is still unknown and it matters, ask who decides. Record it as an open question with a default to use until someone answers. If the main questions are all open, the work is probably a spike, so suggest one.
 
-Do not block on optional detail. Preserve a genuine implementation question in the Technical section when resolving it is part of the ticket, but resolve product and scope decisions before finalising the ticket.
+The aim is a ticket with few or no open questions.
 
-### 4. Draft the ticket
+## 3. Research the code
 
-Use this Markdown structure:
+Research read-only. Do not change product code, create Jira issues or modify pull requests.
 
-```markdown
-# <Actionable ticket title>
+- Read repository instructions such as `AGENTS.md`, `CLAUDE.md` and `README.md`. They often hold constraints the reader must follow.
+- Trace the current behaviour through the entry points, code, configuration and tests.
+- Check the history for related work, or for work already done, partly done or reverted.
+- Find what the reader needs: the one place to make each change, the pattern to copy, the rules that constrain the change, and the commands that prove it works. Take commands from repository documentation or CI configuration; do not invent them.
+- Verify every path and line number you will cite.
 
-## Summary
+Keep track of what you have confirmed and what you only suspect. In the ticket, write confirmed facts as plain statements. Put suspicions under "Suspected cause". Never present a guess as a fact.
 
-## Context
+Research efficiently. Every tool call adds a turn, and every turn re-reads everything gathered so far, so a large file dump early on is paid for again on every later turn.
 
-## Technical
+- **Batch independent reads.** Make them as parallel tool calls or in one shell command, not one at a time.
+- **Search, then read ranges.** Find symbols with `rg -n`, then read only the lines around them, for example `sed -n 40,90p`. Read a whole file only when it is short or you need all of it.
+- **Bound history.** Use `git log -n 20 --oneline -- <path>`, or `--grep`, rather than an open-ended log.
+- **Stay in the repositories that matter.** Do not read installed gems, packages or unrelated projects unless the ticket depends on them.
+- **Stop when you can name** where each change goes, the rules it must follow, and the commands or checks that prove it. More than that helps you choose what to say, but very little of it belongs in the ticket.
 
-## Resources
+## 4. Ask the follow-up round
 
-## Acceptance Criteria
-```
+Share only the findings that change a question, for example "the expired invite is still in the database, but the settings page only lists pending ones". Then ask about the gaps the research exposed. Settle product and scope decisions now, including any default you plan to write as a requirement.
 
-Follow the packaged guide closely:
+## 5. Draft the ticket
 
-- Prefix bug titles with `[BUG]` and spike titles with `[SPIKE]`.
-- Explain the user and service context in plain English before technical detail.
-- Write for a junior developer on their first day and define unfamiliar terms.
-- Use simplified technical english for discussing technical concepts and implementation.
-- Make the title understandable without opening the ticket.
-- Include reproduction steps, known facts, suspected causes, constraints, implementation starting points, testing expectations, open questions, and out-of-scope boundaries when relevant.
-- If no resources exist, retain the Resources section and say `No additional resources were supplied.`
-- Use around three to five concise, specific, testable acceptance criteria unless the work genuinely requires a different number.
-- Do not invent requirements, code behaviour, evidence, links, or resources.
+Write the ticket as the guide describes. Do not invent requirements, behaviour, evidence, links, people or resources.
 
-### 5. Format ticket and pull request links
+### Ticket and pull request links
 
-Every Jira ticket or pull request reference must be a Markdown link followed immediately by a short parenthetical explanation of why it is relevant:
+Every Jira ticket or pull request must be a Markdown link, followed by a short note in brackets saying why it is relevant:
 
 ```markdown
 [ABC-1234](https://jira.example/browse/ABC-1234) (adds the API path)
-[backend PR #1234](https://github.com/example/backend/pull/1234) (changes authentication for the endpoint)
 ```
 
-Apply this rule throughout the ticket. Never write a bare identifier such as `ABC-1234` or `PR #1234`, and never provide a ticket or pull request link without the explanation.
+Never guess a URL. Take URLs from the user, repository remotes or history, or read-only tools. If you do not have a URL for an identifier that matters, ask for it.
 
-Keep the explanation short and specific to its relevance to this ticket. Do not merely repeat the linked ticket or pull request title.
+Link code with the repository's web URL when you know it, for example a GitHub `blob/<commit>/path#L12` link. Otherwise use a repository-relative path with a line number.
 
-Resolve URLs from user input, repository remotes and history, or accessible read-only tooling. Do not guess a URL. If a relevant identifier has no confirmed URL, ask the user for it before finalising. Omit the reference only when the user agrees it is unnecessary.
+## 6. Cut, then read it cold
 
-### 6. Evaluate and revise
+Shorten the draft first, using the guide's length budget and its "Before saving" checklist. Then reread it as the coding agent with only this ticket and the repository:
 
-Before writing the file, evaluate the entire draft against [references/ticket_guide.md](references/ticket_guide.md). Revise it until every applicable check passes:
+- Would you know what to change, which rules to follow and when to stop?
+- What would you have to guess? Fix each guess in the fewest words, or take it back to the user.
+- Could you prove each acceptance criterion yourself?
 
-- The title is short, specific, actionable, outcome-led, and correctly prefixed.
-- Summary states the current problem, why it matters, the requested change, and outcome in one or two sentences.
-- Context teaches the necessary concepts, history, users, current behaviour, problem, and benefit in plain English.
-- Technical gives practical investigation and implementation starting points while distinguishing facts, suspicions, and open questions.
-- Resources contain useful material or explicitly state that none was supplied.
-- Acceptance criteria describe a clear, testable done state and any required proof.
-- Every ticket and pull request reference is linked and has a brief relevance explanation.
-- The ticket is self-contained, concise, and free of invented claims.
-- The language is aimed at a junior developer on their first day of work with no prior knowledge of the product.
+Do not show the user this checklist.
 
-Do not expose a mechanical score. If a material gap remains, return to clarification instead of saving an incomplete ticket.
+## 7. Save and hand off
 
-### 7. Save and hand off
+Write the ticket to the agreed `.md` path. Using this skill gives permission to create that one file. It does not give permission to overwrite an existing file. If the path exists, ask whether to overwrite it or use another path. Only in that case, read and follow [human-review.md](../references/human-review.md) for the decision.
 
-Write the final reviewed draft to the agreed `.md` path. Treat the request to use this skill as permission to create that one ticket file, but not to overwrite an existing file.
+Then give the user:
 
-If the destination exists, stop and ask whether to overwrite it or use a different path. Do not silently replace it.
-
-For this or another approval decision, save the proposed result separately and follow [human-review.md](../references/human-review.md): open it in Neovim in a new Ghostty tab before asking. This does not add a gate to ordinary ticket drafting or clarification.
-
-After saving, provide:
-
-- A clickable link to the Markdown file.
-- A one-sentence description of the ticket produced.
-- Any intentionally retained open questions or unverified evidence; say explicitly when there are none.
-
+- A clickable link to the file.
+- One sentence describing the ticket.
+- Any open questions or unverified claims left in the ticket, or a statement that there are none.
