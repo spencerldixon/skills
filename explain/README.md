@@ -7,12 +7,12 @@ It follows these steps:
 1. Establishes what you want explained from a file, ticket, question, or the conversation.
 2. Researches the relevant code and traces how the pieces connect.
 3. Confirms any assumptions with you before delivering the full explanation.
-4. Explains who uses the feature, why it exists, and how it works through numbered steps, practical examples, and verified line references.
-5. Flags unknowns with specific questions and suggested people or roles to ask.
+4. Leads with the problem the code solves, then walks one concrete example (such as a real request URL) through numbered step headings with verified line links.
+5. Explains why the pieces are arranged this way and ends with a clear next action.
 
-Explanations use plain English, define acronyms and unfamiliar terms, and build
-from first principles. Short sections and descriptive headers make them easy to
-skim and revisit. The skill explains the code in the conversation without
+Explanations are written for a developer new to the codebase: they define
+domain terms and internal names, not general programming vocabulary. They stay
+short, scoped to what you asked, and easy to skim in a terminal. The skill explains the code in the conversation without
 changing it.
 
 ## Usage
