@@ -1,0 +1,92 @@
+{
+  "skill_name": "pr-summary",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "write a PR summary for my branch",
+      "expected_output": "No ticket; title has no prefix; moves sync-age metric from New Relic to CloudWatch; Green or Amber with reason tied to sync monitoring; short.",
+      "files": [
+        "fixtures/cloudwatch-sync-age"
+      ],
+      "assertions": [
+        "Title in one ```text block and description in one ```markdown block",
+        "Headings What/Why/Ticket/Risk present in order",
+        "Risk labels present",
+        "Exactly one risk rating",
+        "No guessed Jira URL",
+        "Average sentence length at most 20 words",
+        "No sentence over 25 words",
+        "No leftover template comments or placeholders",
+        "Title has no bracketed prefix",
+        "Ticket section is N/A",
+        "Risk rating is one of ['Amber', 'Green']",
+        "Description at most 200 words"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can you draft the PR description for this branch? Ticket is HMRC-2435.",
+      "expected_output": "Ticket prefix [HMRC-2435]; explains TARIC/oplog briefly; Red because it changes how upstream TARIC sync data is processed; needs Thor/Neil approval.",
+      "files": [
+        "fixtures/taric-destroy-update"
+      ],
+      "assertions": [
+        "Title in one ```text block and description in one ```markdown block",
+        "Headings What/Why/Ticket/Risk present in order",
+        "Risk labels present",
+        "Exactly one risk rating",
+        "No guessed Jira URL",
+        "Average sentence length at most 20 words",
+        "No sentence over 25 words",
+        "No leftover template comments or placeholders",
+        "Title starts with [HMRC-2435]",
+        "Ticket section names the ticket",
+        "Risk rating is one of ['Red']",
+        "Description at most 300 words"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "pr summary pls, ticket HMRC-1240",
+      "expected_output": "Ticket prefix; explains new security headers and removal of Rails new_framework_defaults files; risk reasoning addresses the deleted framework-default config.",
+      "files": [
+        "fixtures/security-headers"
+      ],
+      "assertions": [
+        "Title in one ```text block and description in one ```markdown block",
+        "Headings What/Why/Ticket/Risk present in order",
+        "Risk labels present",
+        "Exactly one risk rating",
+        "No guessed Jira URL",
+        "Average sentence length at most 20 words",
+        "No sentence over 25 words",
+        "No leftover template comments or placeholders",
+        "Title starts with [HMRC-1240]",
+        "Ticket section names the ticket",
+        "Description at most 220 words"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "write up the PR for this dependabot bump",
+      "expected_output": "No ticket; dev-only dependency bump; Green; very short (under ~80 words).",
+      "files": [
+        "fixtures/amazing-print-bump"
+      ],
+      "assertions": [
+        "Title in one ```text block and description in one ```markdown block",
+        "Headings What/Why/Ticket/Risk present in order",
+        "Risk labels present",
+        "Exactly one risk rating",
+        "No guessed Jira URL",
+        "Average sentence length at most 20 words",
+        "No sentence over 25 words",
+        "No leftover template comments or placeholders",
+        "Title has no bracketed prefix",
+        "Ticket section is N/A",
+        "Risk rating is one of ['Green']",
+        "Description at most 80 words"
+      ]
+    }
+  ]
+}

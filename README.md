@@ -89,7 +89,6 @@ package.json             pi package manifest
 <name>/SKILL.md          reusable skills and orchestrators (Agent Skills format)
 agents/<role>.md        shared agent roles and write scopes
 references/             shared human review procedure
-uninstall.sh             removes installs made by the old install script
 ```
 
 ## Adding a skill
@@ -100,3 +99,5 @@ uninstall.sh             removes installs made by the old install script
 4. Check the Claude Code manifest: `claude plugin validate .`
 
 Keep per-skill `agents/openai.yaml` files inside their skill directories: they are Codex skill metadata, not the shared agent roles in the top-level `agents/` directory.
+
+Always try to eval skills.
