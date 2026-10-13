@@ -1,0 +1,159 @@
+{
+  "skill_name": "write-ticket",
+  "evals": [
+    {
+      "id": 1,
+      "name": "bug-subheading-validity-link",
+      "prompt": "I need a bug ticket. On the tariff site, if you open a subheading for a date when it isn't valid you get a box listing the dates it was valid. Clicking the first date just reloads the same page instead of taking you to the code. Can you write it up?",
+      "expected_output": "Interviews for an example URL, expected behaviour and Jira link, then traces the validity-period links to subheadings/show_404.html.erb, which always builds subheading links even when the code is a commodity on that date. [BUG] ticket with repro, confirmed vs suspected cause, where to start, verify commands.",
+      "files": [
+        "../../write-ticket-workspace/fixtures/trade-tariff-frontend",
+        "../../write-ticket-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Wrote a ticket",
+        "Interviewed the user before drafting",
+        "First question round has at most 5 numbered questions",
+        "Has the sections in order (Resources optional)",
+        "Title prefix is [BUG]",
+        "First mention of each Jira key is a link with a bracketed reason",
+        "No guessed Jira URLs",
+        "Has 3+ file:line references to the code",
+        "All file:line references resolve",
+        "Gives an exact command to verify",
+        "No inline evidence labels (**Confirmed:** etc.)",
+        "Ticket at most 600 words",
+        "No filler about missing things",
+        "No separate How-to-verify section duplicating the ACs",
+        "Has 3-5 acceptance criteria",
+        "Every AC has a link, command, quoted string or number to check",
+        "Points at show_404.html.erb where the links are built",
+        "Includes the example URL for 8543909000",
+        "Has expected vs actual behaviour"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "refine-xi-geo-area-1400",
+      "prompt": "Turn tickets/hmrc-2111.md into a proper ticket we can hand to a dev or an agent",
+      "expected_output": "Refines a raw support query: keeps HMRC-1984/2111 history and the HMRC decision (stay in XI, no UK redirect), resolves scope (1400 must-have), records placeholder copy as an assumption for content review, points at the geographical areas controller.",
+      "files": [
+        "../../write-ticket-workspace/fixtures/tickets/hmrc-2111.md",
+        "../../write-ticket-workspace/fixtures/trade-tariff-frontend",
+        "../../write-ticket-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Wrote a ticket",
+        "Interviewed the user before drafting",
+        "First question round has at most 5 numbered questions",
+        "Has the sections in order (Resources optional)",
+        "Title prefix is none",
+        "First mention of each Jira key is a link with a bracketed reason",
+        "No guessed Jira URLs",
+        "Has 3+ file:line references to the code",
+        "All file:line references resolve",
+        "Gives an exact command to verify",
+        "No inline evidence labels (**Confirmed:** etc.)",
+        "Ticket at most 500 words",
+        "No filler about missing things",
+        "No separate How-to-verify section duplicating the ACs",
+        "Has 3-5 acceptance criteria",
+        "Every AC has a link, command, quoted string or number to check",
+        "Says users must stay on XI, not be sent to the UK site",
+        "Flags placeholder copy for content review",
+        "Uses example commodity 2103200000"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "spike-action-log-report",
+      "prompt": "can you tidy up tickets/hmrc-2135.md? it's a bit of a mess and I want someone (or an agent) to be able to pick it up",
+      "expected_output": "[SPIKE] with 1-day time box, numbered questions, deliverable (findings + follow-up tickets), access needed with log group left open (ask #tariff-platform), fixes out of scope.",
+      "files": [
+        "../../write-ticket-workspace/fixtures/tickets/hmrc-2135.md",
+        "../../write-ticket-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Wrote a ticket",
+        "Interviewed the user before drafting",
+        "First question round has at most 5 numbered questions",
+        "Has the sections in order (Resources optional)",
+        "Title prefix is [SPIKE]",
+        "First mention of each Jira key is a link with a bracketed reason",
+        "No guessed Jira URLs",
+        "Has 3+ file:line references to the code",
+        "All file:line references resolve",
+        "No inline evidence labels (**Confirmed:** etc.)",
+        "Ticket at most 700 words",
+        "No filler about missing things",
+        "No separate How-to-verify section duplicating the ACs",
+        "Has 3-5 acceptance criteria",
+        "States a 1-day time box",
+        "Deliverable includes follow-up tickets",
+        "Log group name left open, ask #tariff-platform",
+        "Says fixing is out of scope (out-of-scope kept for spikes)"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "tinysupport-resend-invite",
+      "prompt": "need a ticket for tinysupport: admins should be able to resend invites that have expired",
+      "expected_output": "Non-HMRC Rails story. Finds that the edit page only loads pending invitations; records resend mechanics as decided/assumed (new token, 7 days, old link dead, same role); how long to show expired invites open with a default.",
+      "files": [
+        "../../write-ticket-workspace/fixtures/tinysupport"
+      ],
+      "assertions": [
+        "Wrote a ticket",
+        "Interviewed the user before drafting",
+        "First question round has at most 5 numbered questions",
+        "Has the sections in order (Resources optional)",
+        "Title prefix is none",
+        "First mention of each Jira key is a link with a bracketed reason",
+        "No guessed Jira URLs",
+        "Has 3+ file:line references to the code",
+        "All file:line references resolve",
+        "Gives an exact command to verify",
+        "No inline evidence labels (**Confirmed:** etc.)",
+        "Ticket at most 500 words",
+        "No filler about missing things",
+        "No separate How-to-verify section duplicating the ACs",
+        "Has 3-5 acceptance criteria",
+        "Every AC has a link, command, quoted string or number to check",
+        "Notes the edit page only loads pending invitations",
+        "States resend mechanics (new link, 7 days, old link dead)",
+        "Says which expired invites are listed (settled: all, newest first)"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "refine-workfile-notify",
+      "prompt": "refine tickets/workfile-notify.md into a proper ticket",
+      "expected_output": "Non-HMRC Go CLI. Refines a 2-line rough note: macOS-only desktop notifications for failed and waiting ask-mode automations, one per event, no-op elsewhere, Slack out of scope; on-by-default recorded as a recommendation/assumption.",
+      "files": [
+        "../../write-ticket-workspace/fixtures/tickets/workfile-notify.md",
+        "../../write-ticket-workspace/fixtures/workfile"
+      ],
+      "assertions": [
+        "Wrote a ticket",
+        "Interviewed the user before drafting",
+        "First question round has at most 5 numbered questions",
+        "Has the sections in order (Resources optional)",
+        "Title prefix is none",
+        "First mention of each Jira key is a link with a bracketed reason",
+        "No guessed Jira URLs",
+        "Has 3+ file:line references to the code",
+        "All file:line references resolve",
+        "Gives an exact command to verify",
+        "No inline evidence labels (**Confirmed:** etc.)",
+        "Ticket at most 500 words",
+        "No filler about missing things",
+        "No separate How-to-verify section duplicating the ACs",
+        "Has 3-5 acceptance criteria",
+        "Every AC has a link, command, quoted string or number to check",
+        "States on by default with a way to switch it off",
+        "macOS only, no-op on other platforms",
+        "Slack is out of scope"
+      ]
+    }
+  ]
+}

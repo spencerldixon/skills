@@ -1,26 +1,24 @@
 # Write Ticket
 
-`write-ticket` is a skill for creating clear, self-contained Jira tickets in a preferred format.
+`write-ticket` writes short, precise Jira tickets that a developer new to the codebase, or a coding agent with no other context, can pick up and finish without asking questions.
 
 It follows these steps:
 
-1. Interviews you to understand the problem, users, outcome, constraints, and definition of done.
-2. Researches the relevant code and history for confirmed context and implementation starting points.
-3. Asks follow-up questions when important information is still missing.
-4. Drafts and reviews the ticket against the packaged `ticket_guide.md`
-5. Saves the finished ticket as a Markdown file at the path you choose.
+1. Interviews you, either from scratch or about the gaps in an existing ticket. It asks a few numbered questions per round, each with a suggested answer.
+2. Researches the relevant code and history.
+3. Asks a second round of questions, based on what the code shows, to settle scope and defaults.
+4. Drafts the ticket, cuts it to length, and rereads it as an agent would.
+5. Saves the ticket as a Markdown file at the path you choose.
 
 ## Ticket format
 
-Tickets are written against the template and guidance in `ticket_guide.md`
-
-Tickets contain an actionable title followed by these sections:
+Tickets follow `references/ticket_guide.md`. A typical ticket is 200–600 words and has an actionable title followed by these sections:
 
 1. Summary
 2. Context
-3. Technical
-4. Resources
-5. Acceptance Criteria
+3. Technical: the specific changes and the rules they must follow. Spikes also say what to look for and where.
+4. Resources: omitted when there are none.
+5. Acceptance Criteria: three to five checks, using links, commands or exact results, that a human or an agent can carry out alone.
 
 Bug and spike titles use `[BUG]` and `[SPIKE]` prefixes. Jira tickets and pull requests are always linked and followed by a brief explanation of their relevance, for example:
 
