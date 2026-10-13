@@ -5,7 +5,9 @@ description: Research and explain a ticket, file, feature, or codebase concept f
 
 # Explain
 
-Help the reader build a mental model they can reuse: why this exists, who needs it, what happens, where it happens, and why the pieces are arranged this way. Assume a junior developer on their first day with no product knowledge, limited familiarity with code, and a short attention span.
+Help the reader build a mental model they can reuse: what problem this code solves, what happens step by step, where it happens, and why the pieces are arranged this way.
+
+The reader is a junior developer on their first day in this codebase. They know general programming and common tools: APIs, databases, background jobs, caching, AWS, HTTP, Git. They may already know the product at a high level. What they lack is this codebase's domain language, its internal names, and how its pieces connect. Spend words there, not on things any developer knows. They also have limited time, so overwhelm is the main risk: a short explanation they finish beats a thorough one they abandon.
 
 Research the workspace read-only and deliver the explanation in the conversation. Save a document or change code only if separately requested.
 
@@ -20,7 +22,7 @@ Accept any combination of:
 
 Reuse context already supplied. If the subject or repository is unclear, ask one focused question before choosing an unrelated topic or surveying the whole codebase. A file is a starting point: follow its important callers and dependencies to explain its role.
 
-Read a referenced ticket with available read-only tools. If it is inaccessible, ask for its relevant text or location; do not infer its contents from its identifier. Continue any independent code research that is possible.
+Read a referenced ticket with available read-only tools. If it is inaccessible, ask for its relevant text or location; do not infer its contents from its identifier.
 
 ## 2. Research the actual workflow
 
@@ -28,90 +30,74 @@ Read applicable repository instructions and focused documentation. Use `rg --fil
 
 Trace the real path from the initiating person, system, or event to the final result:
 
-- Identify the entry point and what calls it. Establish who uses the feature and the problem it solves from documentation, tickets, code, or user context.
-- Follow the important decisions, transformations, state changes, and handoffs. Inspect relevant callers, services, models, storage, background work, external systems, and output code as applicable; do not force every codebase into a web-request pattern.
-- Read focused tests, configuration, and schemas to check examples, edge cases, and conditions that change the path. Separate behaviour described by a test from behaviour you have actually observed running.
+- Identify the entry point, what calls it, and the problem it solves. The problem is usually the most useful sentence in the whole explanation (for example, “a commodity page is expensive to build because it joins hundreds of measures”), so find it in docs, commits, tickets, or the code itself.
+- Follow the important decisions, transformations, state changes, and handoffs. Inspect relevant callers, services, models, storage, background work, and external systems as applicable; do not force every codebase into a web-request pattern.
+- Read focused tests, configuration, and schemas to check examples and edge cases. Reading a test tells you intended behaviour, not that it passes.
 - For a ticket, distinguish the checked-out code's current behaviour, the requested change, and the intended benefit. Acceptance criteria describe what should be true when the work is done; they do not prove it already works.
-- Consult focused history or design records when they help explain intent. State a component's observable responsibility confidently when supported; label inferred design rationale as inference. Code structure alone does not prove why its authors chose it.
-- Verify source line numbers against the files you actually read, using tools such as `nl -ba`. Attach references to the specific claims they support, rather than giving an unexplained file list at the end.
+- Use focused history or design records when they explain intent. State a component's observable responsibility confidently; label design rationale you infer from structure alone as inference.
+- Verify line numbers against the files you actually read, using tools such as `nl -ba`.
 
-Keep research proportional to the question. Follow enough connections to explain the main path and its important alternative or failure case. Avoid unrelated architecture tours. Identify boundaries you cannot inspect, including another repository, an external service, or unavailable runtime configuration.
+Keep research proportional to the question. Follow enough connections to explain the main path and its most important alternative or failure case. Avoid unrelated architecture tours.
 
-Keep evidence distinct: **confirmed in source**, **reported by the user or ticket**, **inferred**, and **unknown**. Do not imply that reading code proves deployed behaviour, that reading tests means they passed, or that a plausible example is real production data.
+When you hit a gap, try to close it with more research before reporting it. An open question in the explanation makes the reader less confident, so include one only when it changes how they should understand the subject, such as a production setting the code cannot show.
 
 ## 3. Confirm assumptions before the full explanation
 
-Before delivering the full explanation, check its scope and claims against the evidence. Resolve assumptions from the repository where possible instead of asking the user questions the code can answer.
+Resolve assumptions from the repository where possible instead of asking the user questions the code can answer.
 
-If you still plan to rely on assumptions about the intended subject, users, terminology, business purpose, environment, or expected behaviour, briefly state them and ask the user to confirm or correct them. Use a short round of focused questions and explain what each answer will clarify. Wait for answers before delivering an explanation that depends on those assumptions; silence is not confirmation. Continue independent research while waiting.
-
-Previously supplied confirmation counts; do not ask again. If no unconfirmed assumptions remain, say so briefly and proceed without manufacturing a question. User confirmation establishes their context or intent, but does not independently verify runtime behaviour.
-
-Unresolved details that the explanation does not depend on may remain as explicitly labelled unknowns. Do not quietly adopt them as facts. Carry them into “Unknowns and who to ask” with a concrete question and a suggested source or contact.
+If the explanation would still depend on assumptions about the intended subject, scope, business purpose, or expected behaviour, state them briefly and ask the user to confirm or correct them, saying what each answer changes. Keep it to a short round of focused questions, and wait for answers before delivering an explanation that depends on them. If no unconfirmed assumptions remain, proceed without manufacturing a question. Previously supplied confirmation counts.
 
 ## 4. Teach in small, connected steps
 
-- Start with the real-world need, then introduce only the concepts needed to follow this code. Build from familiar actions and cause and effect before naming abstractions.
-- Expand every acronym on first use and explain its meaning in ordinary language, including common ones such as API (application programming interface: a defined way for programs to communicate). Explain unfamiliar product terms and code vocabulary at first use too. Never guess an internal acronym's expansion; flag it for confirmation.
-- Use one small, practical example throughout the explanation so the reader can follow the same input through each handoff to its result. Mark invented names, values, and scenarios as illustrative, and keep them consistent with the code. Include one relevant empty, invalid, or failure case when it helps explain the feature.
-- Use descriptive headers, explicitly numbered workflow steps, short sentences, and paragraphs of two or three sentences. Aim for roughly 400–700 words for a typical feature, less for a small question; expand only when needed to preserve the explanation. Avoid deep bullet nesting and long code blocks.
-- Make step titles describe actions, such as “Check whether the user can view the order.” Explain an identifier's job before asking the reader to remember its name.
-- Use a friendly, encouraging tone and an occasional useful analogy. Map the analogy back to the real components and say where it stops fitting if that matters. Avoid baby talk, forced jokes, and words such as “obviously” or “just” that make difficulty sound like the reader's fault.
-- Quote code only when a small excerpt teaches something prose cannot. Explain what the excerpt does and why it matters; label pseudocode and illustrative code clearly. Do not narrate every line or paste entire functions.
-- Give clickable file links with verified line numbers beside the relevant step or claim. Use absolute local paths with a single line anchor and a readable label containing the filename and line number. Use verified remote line links when only remote source is available. Never invent a path, line number, or link.
-- Use ASD-STE100 simplified technical english for technical sections.
+- **Lead with the problem.** Open with what goes wrong or what would be hard without this code, then what it does about it. Skip general product background the reader likely has; describe only the part of the product this subject touches.
+- **Define what's specific to this codebase.** Explain domain terms, internal names, and uncommon acronyms at first use, for example Meursing code, TARIC, or CDS (Customs Declaration Service). Say concretely what the thing is in the real world, not only the role it plays in the code: “a Meursing code is a 4-digit code that describes the milk fat, sugar and starch content of processed foods, which sets part of their duty” teaches more than “an extra code that can change the duty”. Do not define household developer vocabulary such as API, database, AWS, cache, or background job. A public acronym with a well-known meaning can be expanded from documentation or general knowledge; flag only a genuinely internal acronym you cannot confirm.
+- **Be precise, then plain.** Use the accurate technical term and explain it simply, rather than a simplification that is wrong. “Two database schemas, one per service” is right; “two copies of the database” misleads. Analogies are welcome when they map cleanly onto the real components.
+- **Follow one concrete example.** Use one small, practical example throughout so the reader can follow the same input through each handoff to its result. Make it as real as the code allows: when the flow starts with a request, show the method, URL and parameters (`GET /uk/api/commodities/0101210000?filter[geographical_area_id]=RO`); when a step builds a value such as a cache key, job argument or SQL filter, show what that value looks like for the example. Seeing the data change is what makes each step click. Mark invented values as illustrative and keep them consistent with the code. Include one failure or empty case when it helps.
+- **Say what actually happens.** Prefer specific verbs and names over vague ones. “The controller passes the commodity and date to the service” is clearer than “creates the service”; “HMRC's CDS API publishes a daily file” is clearer than “the upstream publishes a file”. Avoid narrating plumbing such as object instantiation unless it matters.
+- **Keep it short.** Aim for roughly 300–600 words for a typical feature and 150–350 for a small question about one class or method. Cut anything that repeats an earlier section or that the reader would not miss. Use short sentences, paragraphs of two or three sentences, and shallow lists.
+- **Show code sparingly.** A small excerpt helps when it teaches something prose cannot. Explain what it does and why it matters; do not paste whole functions.
+- **Link claims to source.** Give clickable file links with verified line numbers beside the step or claim they support. Use absolute local paths with a single line anchor and a readable label containing the filename and line number, such as `[cached_commodity_service.rb:42](/abs/path/app/services/cached_commodity_service.rb#L42)`. Never invent a path, line number, or link.
+- **Stay in scope.** Explain the subject that was asked about. For a ticket, explain what the ticket needs; do not propose extra follow-on work, refactors, or unrelated bugs. Mention a defect you noticed only if it affects understanding of the subject.
+- Use a friendly, encouraging tone. Avoid words such as “obviously” or “just” that make difficulty sound like the reader's fault.
+- Use ASD-STE100 Simplified Technical English for technical sections.
 
 ## 5. Shape the explanation for skimming
 
-Use this order, keeping each section proportional to the subject. The Summary and Context should provide the same orientation as a good ticket: purpose and users before implementation. These instructions are self-contained; another skill is not required.
+Use short, plain headings that tell the reader what the section gives them. The defaults below work well; rename a heading when a more specific one would help the reader skim (for example, “How a sync run works” instead of “How it works”). Keep each section proportional, and drop a section that would add nothing.
 
-### Summary
+### The short version
 
-One or two plain-English sentences explaining what the subject does and why it matters. For a ticket, include the current problem and intended outcome. For existing code, describe its responsibility without inventing a defect or change request.
+Two or three sentences: the problem, what this code does about it, and the visible result. For a ticket, the current problem and the outcome the ticket wants. For existing code, its responsibility, without inventing a defect or change request.
 
-### Context: who uses this and why
+### Key terms
 
-Explain the relevant part of the product, the person or system using it, their goal, and what triggers this workflow. Introduce the practical example. Include history only when it is known and helps understanding.
+A short glossary of the codebase-specific terms and concepts needed to follow the steps, each in a sentence. Skip it when there are none or when one inline definition is enough.
 
-### The few concepts you need
+### How it works
 
-Briefly define the small set of ideas needed for this explanation, starting from first principles. For example, before discussing a background job, explain that some work can be queued to run later so a person does not have to wait for it. Omit this standalone section for a small question if inline definitions suffice.
+Start with a small diagram when it makes the connections clearer. Draw a single chain of steps vertically, top to bottom, so it reads like the numbered list below it; use a horizontal or branching layout only when the flow actually branches. Mark work that happens later, such as a queued job, as distinct from work that happens immediately.
 
-### How it works, step by step
+Then walk through the steps, usually three to seven. Give each step its own numbered subheading one level below the section heading, such as `### 3. Check whether the cached response is still fresh`, followed by a short paragraph. Numbered subheadings stand out in a terminal and let the reader jump between steps, which a dense numbered list does not. Title each step with an action. In short connected prose, say what arrives (using the running example), which component acts and why, what changes or leaves, and the source link. Show the visible result, not only internal calls. For a ticket, make clear where behaviour should change. For a static concept or data structure, number its construction and use rather than inventing an execution sequence.
 
-Start with a compact arrow flow or small diagram when it makes the connections clearer. Label the pieces with plain-English roles and distinguish work that happens later from work that happens immediately.
+For a small question, this section can be two to four steps, or a short paragraph showing where the code is called from and what calls it next.
 
-Then use a numbered list, usually three to seven steps. Each step should explain:
+### Why it's built this way
 
-- What arrives or triggers the step, using the running example.
-- Which component acts, what it does, and why that action is needed.
-- What leaves or changes and which step receives it next.
-- The relevant source location, with a verified line number.
-
-Keep this in short connected prose within each numbered step, rather than repeating a four-field form. Show the visible result, not only the internal calls. For a ticket, make the point where behaviour should change clear and keep the proposed path distinct from existing code. For a static concept or data structure, number its construction and use or its relationships rather than inventing an execution sequence.
-
-### Why the pieces are arranged this way
-
-Explain the key responsibility boundaries and practical tradeoffs: what each separation enables, prevents, or costs. Ground historical reasons in evidence. Phrase an unrecorded rationale as “This separation allows…” or “A likely reason is…” rather than claiming to know the author's intent. Avoid repeating the walkthrough; incorporate this into the steps for a very small topic.
-
-### Unknowns and who to ask
-
-State what remains unresolved and why an answer matters. For each gap, give a precise question and the most useful next source or person. Use documented ownership when available; history can suggest someone familiar with the code but does not establish current ownership. Otherwise suggest a role, such as the feature maintainer or product manager, and label it as a suggested contact. Never invent a person's name or contact anyone automatically. If there are no material unknowns, say so briefly.
+The key responsibility boundaries and tradeoffs: what each separation enables, prevents, or costs. Ground history in evidence; phrase an unrecorded rationale as “This separation allows…” or “A likely reason is…”. Fold this into the steps for a very small topic.
 
 ### Where to look next
 
-Finish with one to three useful code landmarks or a small, optional reading exercise that reinforces the mental model, such as following the example through a named test. Explain what to look for. Avoid assigning homework, proposing unrelated changes, or asking a comprehension quiz unless invited.
+End with a clear next action for the reader. For existing code, that is one to three code landmarks, such as a test that follows the example end to end, with what to look for in each. For a ticket, it is the first concrete step towards the ticket's goal, such as the log query to run or the file to change, rather than a list of further tickets. If an open question genuinely affects understanding, put it here as a short note on where to find the answer, such as a config file in another repository or the team that owns the deployment. Never invent a person's name.
 
 ## 6. Check before delivering
 
-Review the explanation from the perspective of someone opening this repository for the first time:
+Reread the explanation as a developer opening this repository for the first time:
 
-- Can they explain who needs this and why it exists after the opening paragraphs?
-- Can they follow one example from trigger to outcome, including the important handoffs?
-- Are assumptions confirmed and current behaviour, requested changes, inferred rationale, and unknowns clearly distinguished?
-- Are acronyms and unfamiliar terms explained before they become necessary?
+- After the short version, do they know what problem this solves?
+- Can they follow one example from trigger to outcome?
+- Is every codebase-specific term defined before it matters, and nothing a developer already knows over-explained?
+- Are simplifications still technically accurate?
 - Do source links point to verified lines that support the adjacent claims?
-- Are unresolved questions actionable, with an evidence-backed or explicitly suggested contact?
-- Can they skim the headers and numbered steps without losing the thread?
+- Is anything out of scope, repeated, or there only for completeness? Cut it.
 
-Revise for clarity and remove repetition before responding. Do not expose a score or this checklist.
+Revise before responding. Do not expose this checklist.

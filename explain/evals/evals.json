@@ -1,0 +1,136 @@
+{
+  "skill_name": "explain",
+  "evals": [
+    {
+      "id": 1,
+      "name": "cds-sync-worker-file",
+      "prompt": "/explain app/workers/cds_updates_synchronizer_worker.rb",
+      "expected_output": "Follows callers and dependencies to explain the daily CDS (Customs Declaration Service) update sync end to end: what triggers it, download, apply, failure handling. CDS and other acronyms expanded. Numbered steps with verified absolute line links. One running example.",
+      "files": [
+        "../../explain-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Delivered an explanation",
+        "Has at least 3 file:line references",
+        "All file:line references resolve to real lines",
+        "Clickable links use absolute paths into the repo",
+        "Prose at most 750 words",
+        "Steps are numbered subheadings (3+)",
+        "Has a 'Where to look next' section",
+        "No standalone Unknowns section",
+        "No follow-on work / recommendations section",
+        "Doesn't define household dev terms (API, AWS, HMRC)",
+        "Average sentence length at most 20 words",
+        "No sentence over 30 words",
+        "Avoids 'obviously'/'just'/'simply'",
+        "No code block over 15 lines",
+        "CDS expanded at first use"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "hmrc-2135-ticket",
+      "prompt": "explain the ticket in tickets/hmrc-2135.md",
+      "expected_output": "Explains what ActionLogReportWorker does today (schedule, query, mailer, SES), what the ticket asks for (diagnosis, not a fix), and the intended benefit. Keeps current behaviour, requested change and inferred causes distinct. Unknowns include production logs/credentials it cannot inspect.",
+      "files": [
+        "../../explain-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Delivered an explanation",
+        "Has at least 3 file:line references",
+        "All file:line references resolve to real lines",
+        "Clickable links use absolute paths into the repo",
+        "Prose at most 750 words",
+        "Steps are numbered subheadings (3+)",
+        "Has a 'Where to look next' section",
+        "No standalone Unknowns section",
+        "No follow-on work / recommendations section",
+        "Doesn't define household dev terms (API, AWS, HMRC)",
+        "Average sentence length at most 20 words",
+        "No sentence over 30 words",
+        "Avoids 'obviously'/'just'/'simply'",
+        "No code block over 15 lines",
+        "Says ticket asks for diagnosis/investigation, not a fix"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "uk-xi-service-split",
+      "prompt": "how does the UK vs XI service split work in the backend, and why is it built that way?",
+      "expected_output": "Explains XI = Northern Ireland, how a request selects the service and which data it reads, with a running example. Rationale grounded in evidence or labelled as inference.",
+      "files": [
+        "../../explain-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Delivered an explanation",
+        "Has at least 3 file:line references",
+        "All file:line references resolve to real lines",
+        "Clickable links use absolute paths into the repo",
+        "Prose at most 750 words",
+        "Steps are numbered subheadings (3+)",
+        "Has a 'Where to look next' section",
+        "No standalone Unknowns section",
+        "No follow-on work / recommendations section",
+        "Doesn't define household dev terms (API, AWS, HMRC)",
+        "Average sentence length at most 20 words",
+        "No sentence over 30 words",
+        "Avoids 'obviously'/'just'/'simply'",
+        "No code block over 15 lines",
+        "XI explained as Northern Ireland",
+        "Describes the split as database schemas",
+        "Example shows a real request (method + URL)"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "cached-commodity-small",
+      "prompt": "what does CachedCommodityService do?",
+      "expected_output": "Short, proportional answer (well under a full feature walkthrough) explaining what the service caches, why, and where it is used, with verified line links.",
+      "files": [
+        "../../explain-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Delivered an explanation",
+        "Has at least 3 file:line references",
+        "All file:line references resolve to real lines",
+        "Clickable links use absolute paths into the repo",
+        "Prose at most 400 words",
+        "No standalone Unknowns section",
+        "No follow-on work / recommendations section",
+        "Doesn't define household dev terms (API, AWS, HMRC)",
+        "Average sentence length at most 20 words",
+        "No sentence over 30 words",
+        "Avoids 'obviously'/'just'/'simply'",
+        "No code block over 15 lines",
+        "Example shows a real request (method + URL)",
+        "Meursing code defined if mentioned"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "vague-explain-sync",
+      "prompt": "explain the sync",
+      "expected_output": "Ambiguous: the repo has several syncs (CDS, TARIC, others). Asks one focused question naming the candidates before writing a full explanation. After the reply, explains the CDS sync.",
+      "files": [
+        "../../explain-workspace/fixtures/trade-tariff-backend"
+      ],
+      "assertions": [
+        "Delivered an explanation",
+        "Has at least 3 file:line references",
+        "All file:line references resolve to real lines",
+        "Clickable links use absolute paths into the repo",
+        "Prose at most 750 words",
+        "Steps are numbered subheadings (3+)",
+        "Has a 'Where to look next' section",
+        "No standalone Unknowns section",
+        "No follow-on work / recommendations section",
+        "Doesn't define household dev terms (API, AWS, HMRC)",
+        "Average sentence length at most 20 words",
+        "No sentence over 30 words",
+        "Avoids 'obviously'/'just'/'simply'",
+        "No code block over 15 lines",
+        "States which sync it assumed (or asked)"
+      ]
+    }
+  ]
+}
