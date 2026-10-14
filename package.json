@@ -1,6 +1,6 @@
 {
   "name": "spencerldixon-skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Skills for engineering work: an engineer workflow that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries",
   "private": true,
   "keywords": [
