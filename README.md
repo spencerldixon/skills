@@ -6,7 +6,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 
 | Skill | Description |
 | --- | --- |
-| [engineer](engineer/) | Implements bounded fixes with an implementor and independent reviewer; adds planning and approval when material decisions need them. |
+| [engineer](engineer/) | Implements bounded fixes with an implementer and independent reviewer; adds planning and approval when material decisions need them. |
 | [code-review](code-review/) | Reviews a branch or diff for real problems, each with a concrete failure scenario, and gives a pass or changes-needed verdict. |
 | [designer](designer/) | Designs minimalist interfaces with Basecoat UI and Tailwind, with accessibility, responsive layout, copy, performance, and SEO checks. |
 | [find-available-work](find-available-work/) | Finds unassigned Ready to Start tickets on Jira board 155 and rates clarity and complexity to help you choose your next ticket. |
@@ -14,16 +14,20 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [explain](explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
 | [pr-summary](pr-summary/) | Writes a clear PR title and summary using the included template, with an optional Jira ticket and a deployment risk rating. |
 | [walkthrough](walkthrough/) | Writes a short human check for a browser, native application, or API, with exact actions and visible results. |
+| [preflight](preflight/) | Checks that a repo's tools, dependencies, services, disk space and one fast spec are ready before agent work starts. |
+| [agent-feedback](agent-feedback/) | Lets agents record lessons and suggest instruction, tool or process changes, for you to approve. |
 | [ship-it](ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, and moves the ticket to In Review. |
 
 ## The engineer workflow
 
 Ask for a ticket implementation or a bounded fix. The engineer delegates product code and preserves existing work:
 
-1. **Clear fix:** implementor builds it, the coordinator verifies, and an independent reviewer checks it.
-2. **Uncertain design:** planner first writes a concise plan. Approval is needed only for material unapproved decisions or an explicitly requested plan gate.
+1. **Clear fix:** implementer builds it, the coordinator verifies, and an independent reviewer checks it.
+2. **Uncertain design:** planner first writes a concise plan. Its open questions are asked before the plan is finished. Approval is needed only for material unapproved decisions or an explicitly requested plan gate.
 3. **Unverified UI/device behavior:** reviewer supplies a short human check. Required approval/check documents open automatically in Neovim in a new Ghostty tab.
 4. Publish only with authorization; `ship-it` handles its stated external actions.
+
+`preflight` runs before any agent starts. At the end, agents' `feedback.md` entries become proposed instruction changes; none are applied without approval.
 
 Reports are written once. Agents start with fresh context, receive file paths, and return a path plus a short outcome. The coordinator keeps verification and decisions in one `status.md`.
 
@@ -31,9 +35,9 @@ Artifacts default to `~/.local/state/engineer/<repo>/<task-id>/`, outside the re
 
 ### Customising the agents
 
-[`agents/`](agents/) contains the planner, implementor, and reviewer instructions. `tools: report-only` means product files are read-only but the assigned report can be written; `tools: full` permits authorized implementation. These definitions are prompts, not an executable runner or enforced sandbox. Configure runner permissions to match.
+[`agents/`](agents/) contains the planner, implementer, and reviewer instructions. Planner and reviewer get `Read, Grep, Glob, Bash, Write` so they can write their reports; the implementer inherits all tools. Read-only product files is a prompt rule, not an enforced sandbox. Configure runner permissions to match.
 
-The runtime's default model is used unless an available model is configured per role. There are no implied model tiers or claimed savings. A cheaper implementor can suit a precise task; preserve independent review and stronger reasoning where uncertainty matters.
+Front matter sets each role's Claude Code model and effort: planner `opus`/`high`, reviewer `opus`/`medium`, implementer `sonnet`/`medium`. The engineer runs on the session model. Other runtimes ignore these fields; configure comparable models there.
 
 Keep repository-specific commands and conventions in each repo's `AGENTS.md`. The workflow and role reports should reference facts once, not repeat the conversation.
 
