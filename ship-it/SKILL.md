@@ -5,17 +5,14 @@ description: Ship finished local work for review across one or more repositories
 
 # Ship it
 
-Turn the local work for a ticket into open pull requests, then tell Jira about them. Invoking this skill is the user's go-ahead to commit, push, open pull requests, comment on the ticket and move it. Stop and ask only where this skill says so.
+Turn the local work for a ticket into open pull requests, then tell Jira. Invoking this skill authorizes committing, pushing, opening pull requests, commenting on the ticket and moving it; add no other confirmation gate. Stop and ask only where this skill says so, after opening the scope or conflict document per [human-review.md](../references/human-review.md).
 
-Use the GitHub MCP for pull requests and the Jira (Atlassian) MCP for the ticket. Load deferred tools with tool search. If the GitHub MCP is unavailable, use `gh`. The Jira site is `https://transformuk.atlassian.net`.
-
-Where this skill requires a decision, prepare the concrete scope or conflict document and follow [human-review.md](../references/human-review.md) to open it before asking. Invoking ship-it remains authorization for its stated actions; do not add another confirmation gate.
+Use the GitHub MCP for pull requests (else `gh`) and the Jira (Atlassian) MCP for the ticket, loading deferred tools with tool search. The Jira site is `https://transformuk.atlassian.net`.
 
 ## 1. Find the ticket and the repositories
 
-- **Ticket key**, such as `HMRC-1234`: take it from the user's message, the conversation or the current branch name. If there is none, ask for it. Never invent one.
-- Read the ticket with the Jira MCP to confirm it exists. Use its title and description to name the branch.
-- **Repositories:** the current repository, plus any others the user names or that you changed for this ticket in this session. Run `git status` in each. Skip a repository with no uncommitted changes and no commits ahead of its default branch.
+- **Ticket key**, such as `HMRC-1234`: from the user's message, the conversation or the branch name. If there is none, ask. Never invent one. Read the ticket with the Jira MCP to confirm it exists; use its title to name the branch.
+- **Repositories:** the current one, plus any the user names or you changed for this ticket in this session. Skip a repository with no uncommitted changes and no commits ahead of its default branch.
 
 Do steps 2 to 4 for each repository. Do step 5 once, after every pull request is open.
 

@@ -5,52 +5,41 @@ description: Coordinate implementation and independent review of a ticket or bou
 
 # Engineer
 
-Coordinate the work; delegate product code to the implementor. The user's request defines scope and authorization. Existing approval carries forward.
+Coordinate the work; delegate product code to the implementer. The user's request defines scope and authorization. Existing approval carries forward. Ask only when missing information prevents safe progress, and continue independent work meanwhile.
 
-## Choose the workflow
-
-- **Bounded change:** concrete outcome, known affected area, no unresolved design. Send the task directly to the implementor, verify, then obtain an independent review. A review with specific fixes is enough input; do not require a separate ticket or planner.
-- **Design work:** uncertainty about behavior, architecture, migrations, permissions, or several interacting areas. Use the planner first. Ask for approval only when the plan contains a material decision the user has not authorized, or the user requested a plan gate. Otherwise explain the approach briefly and proceed.
-- Ask focused questions only when missing information prevents safe progress. Continue independent work. Do not force a ticket-writing interview for a clear request.
+- **Bounded change:** concrete outcome, known area, no unresolved design. Implement, verify, review. A review with specific fixes is enough input.
+- **Design work:** uncertain behavior, architecture, migrations, permissions, or several interacting areas. Plan first.
 
 ## Set up once
 
-1. Read repository instructions and inspect branch, worktree, and relevant checks. A dirty tree is not itself a blocker. Preserve existing work and record a baseline for tracked and relevant untracked files. Ask only about ambiguous ownership, conflicting edits, or destructive operations.
-2. Save the task and checkable outcomes in `task.md`. Use the supplied key, or generate a descriptive local ID without asking. Local IDs are not Jira tickets.
-3. Use an explicit artifact directory when supplied; otherwise use `${ENGINEER_ARTIFACT_ROOT:-~/.local/state/engineer}/<repo>/<task-id>/`, expanded to an absolute path outside the repository. Reuse the active session's folder. For older runs, inspect status and resume compatible work without overwriting reports; create a new run directory when scope differs.
-4. On the default branch, create `<task-id>-<short-description>`; on a feature branch, stay there. Ask before disturbing a merge/rebase or detached work. Do not stage, commit, or publish without authorization.
-5. Maintain one short `status.md`: scope, mode, baseline, decisions/approval evidence, current step, report paths, commands actually run and results, unresolved limits. Update it at transitions; do not duplicate full reports in it.
+1. Read repository instructions; inspect branch, worktree, and checks with `rg -n` and targeted reads. A dirty tree is not a blocker: record a baseline of tracked and relevant untracked files and preserve it. Ask only about ambiguous ownership, conflicting edits, or destructive operations.
+2. Save the task and checkable outcomes in `task.md`, keyed by the supplied ticket or a descriptive local ID (not a Jira key).
+3. Artifact directory: the supplied one, else `${ENGINEER_ARTIFACT_ROOT:-~/.local/state/engineer}/<repo>/<task-id>/` as an absolute path outside the repository. Reuse this session's folder; for an older run, resume compatible work without overwriting reports, or use a new directory when scope differs.
+4. On the default branch, create `<task-id>-<short-description>`; on a feature branch, stay. Ask before disturbing a merge, rebase, or detached work. Do not stage, commit, or publish without authorization.
+5. Run `../preflight/SKILL.md`. If `blocked`, report the blockers and stop, unless setup is authorized and the documented fix works.
+6. Keep one short `status.md`: scope, mode, baseline, decisions and approvals, current step, report paths, commands run with results, open limits. Update it at transitions; do not copy reports into it.
 
-## Delegate with minimal context
+## Delegate
 
-Resolve role files relative to this skill:
-- `../agents/planner.md`
-- `../agents/implementor.md`
-- `../agents/reviewer.md`
+In Claude Code, use the plugin agents `planner`, `implementer`, and `reviewer`; their front matter sets tools, model, and effort, so do not override them. Elsewhere, start a fresh-context agent (Codex: `fork_turns="none"`) that reads `../agents/<role>.md`, with strong reasoning for planning and review and a cheaper model for implementation.
 
-Start with fresh context when supported (Codex collaboration: `fork_turns="none"`). Pass the role file path, task/report paths, repository and artifact directory, baseline, authorized scope, and the current job. Have the agent read its role instructions; do not paste those instructions or the conversation into its prompt. Read other files only as needed.
-
-Each agent writes its report once to the assigned artifact path and returns only that path, a short outcome, and blockers. Planner and reviewer may write their assigned reports, but must not edit product files. Give them report-write capability; a tool-enforced read-only agent cannot write reports. If a runner only supports read-only execution, capture its report with the runner's output-file option and read the saved file rather than copying it through chat.
-
-Use native subagent tools when available. With command-line runners, pass file paths and use their output-file or redirected output support. Keep logs separate from Markdown reports. Never claim prompt-level file restrictions are an operating-system sandbox.
-
-Use the runtime's available/default model unless the user configures an available model per role. A cheaper implementor is reasonable for a precise bounded task; uncertain planning and independent review need stronger reasoning. Record the actual model when known. Do not infer cost savings from role names or invent model IDs. Agent roles do not imply model tiers.
+Pass only the job, task and report paths, repository, artifact directory, baseline, authorized scope, and the path to `../agent-feedback/SKILL.md`. Do not paste role instructions or the conversation. Each agent writes its report once and returns the path, a short outcome, and blockers. Planner and reviewer write only their reports; prompt rules are not a sandbox. If a runner cannot write files, use its output-file option.
 
 ## Execute
 
-1. **Plan, when needed:** planner writes `plan.md` (normally at most 600 words). Resolve material questions; retain small assumptions in the plan. Use the approval procedure below only if a decision needs it.
-2. **Implement:** implementor reads `task.md`, optional `plan.md`, and repository instructions. It writes `build.md`. Let it make routine implementation choices inside the authorized scope.
-3. **Verify:** run the relevant documented checks yourself once after implementation. Record exact commands/results in `status.md`. Missing tools are a limitation, not a reason to invent a pass. Broaden checks only for a material unresolved concern.
-4. **Review:** reviewer reads task, optional plan, actual diff/baseline, and `../code-review/SKILL.md`; writes `review.md`. Include tracked and relevant untracked changes. For a repo without commits use the saved baseline. Send blocking findings by report path to the implementor, verify changed code, then have the reviewer check the repair. Do not restart completed research.
-5. **Human check, when needed:** if important UI/device behavior could not be verified, or the user requested it, reviewer follows `../walkthrough/SKILL.md` and writes `walkthrough.md`. Default to six core actions; separate optional edge/recovery checks. Otherwise skip this step and state automated evidence.
-6. **Report:** concise outcome, verification, report links, and real limitations. No mandatory step/model table. If publishing requires a decision, present a concrete ready result; use `../ship-it/SKILL.md` only when shipping is authorized.
+1. **Plan (design work):** planner writes `plan.md`. Ask its open questions as one structured prompt, recommended option first, and record answers in `status.md`. Resume the same planner with the answers (Claude Code: SendMessage), or start a new one with `plan.md` and the answers. Get approval only for a material decision the user has not authorized or a requested plan gate; otherwise state the approach in one line and proceed.
+2. **Implement:** implementer reads `task.md` and `plan.md` and writes `build.md`.
+3. **Verify:** run the relevant documented checks once yourself and record exact commands and results. A missing tool is a limitation, not a pass.
+4. **Review:** reviewer reads the task, plan, diff against the baseline (tracked and relevant untracked files), and `../code-review/SKILL.md`, and writes `review.md`. Send blocking findings by report path to the implementer, verify, then have the reviewer check the repair.
+5. **Human check:** only if important UI or device behavior is unverified, or the user asked. Reviewer follows `../walkthrough/SKILL.md` and writes `walkthrough.md`.
+6. **Report:** outcome, verification, report links, and real limits. Follow `../agent-feedback/SKILL.md` yourself, then summarize `feedback.md`: propose repository-instruction lines for approval and list skill or tool suggestions. Apply none without approval. Use `../ship-it/SKILL.md` only when shipping is authorized.
 
-A failed check or review allows two repair rounds for the same blocker. After two unsuccessful rounds, report the evidence and required decision. Preserve completed work. Do not repeat passing checks or rerun entire agents without a changed input or unresolved concern.
+Allow two repair rounds per blocker; then report the evidence and the decision needed. Preserve completed work. Do not rerun passing checks, completed research, or whole agents without a changed input.
 
-## Human approval and check documents
+## Human approval and checks
 
-Before asking for approval or a required human check, save the document and follow [human-review.md](../references/human-review.md) to open it in Neovim in a **new Ghostty tab**. Ask the decision in chat and wait for an explicit answer before dependent actions. Continue independent work where possible.
+Before asking for approval or a human check, save the document and open it per [human-review.md](../references/human-review.md) in Neovim in a **new Ghostty tab**. Ask in chat and wait for an explicit answer before dependent actions.
 
 ## Language
 
-Use concise Simplified Technical English. Define unfamiliar concepts when they affect a decision. Progress updates should state new findings or completed checks; final replies must stand alone.
+Use concise Simplified Technical English. Define unfamiliar concepts when they affect a decision. Progress updates state new findings or completed checks; final replies stand alone.
