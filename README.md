@@ -9,7 +9,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [engineer](engineer/) | Implements bounded fixes with an implementer and independent reviewer; adds planning and approval when material decisions need them. |
 | [code-review](code-review/) | Reviews a branch or diff for real problems, each with a concrete failure scenario, and gives a pass or changes-needed verdict. |
 | [designer](designer/) | Designs minimalist interfaces with Basecoat UI and Tailwind, with accessibility, responsive layout, copy, performance, and SEO checks. |
-| [find-available-work](find-available-work/) | Finds unassigned Ready to Start tickets on Jira board 155 and rates clarity and complexity to help you choose your next ticket. |
+| [find-work](find-work/) | Finds unassigned, unblocked Ready to Start tickets across every Jira project you can access and rates clarity and complexity to help you choose your next ticket. |
 | [write-ticket](write-ticket/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [explain](explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
 | [pr-summary](pr-summary/) | Writes a clear PR title and summary using the included template, with an optional Jira ticket and a deployment risk rating. |
