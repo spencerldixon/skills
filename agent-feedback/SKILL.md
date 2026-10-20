@@ -1,6 +1,6 @@
 ---
 name: agent-feedback
-description: Record lessons from agent work and suggest what would help the next agent. Use at the end of a planner, implementer, reviewer, or engineer job.
+description: Record lessons from agent work and suggest what would help the next agent. Use at the end of an engineer or reviewer job.
 ---
 
 # Agent feedback
