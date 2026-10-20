@@ -52,15 +52,14 @@ If any repository fails in steps 2 to 4, stop before step 5 and report what was 
 
 ## 5. Update Jira once
 
-1. Add one comment to the ticket, in this shape:
+1. Add one markdown comment to the ticket, in this shape:
 
    ```markdown
    <One sentence that says what the pull request does.>
 
    - <repository name>: <pull request URL>
    ```
-
-   With several pull requests, write one sentence for the whole change and list every pull request, one per line. Post one comment, never one per repository. If the ticket already has a comment with these links, do not post again.
+   With several pull requests, write one sentence for the whole change and list every pull request, one per line. Post one comment, never one per repository. If the ticket already has a comment with these links, do not post again. Links should be clickable.
 2. Move the ticket to **In Review**. Get the ticket's available transitions and use the one whose target status is In Review. Never guess a transition ID. If the ticket is already In Review, skip this. If no transition leads there, leave the status and report the transitions that are available.
 
 ## 6. Report
