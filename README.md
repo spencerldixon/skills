@@ -10,6 +10,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [code-review](code-review/) | Reviews a branch or diff for real problems, each with a concrete failure scenario, and gives a pass or changes-needed verdict. |
 | [find-work](find-work/) | Finds unassigned, unblocked Ready to Start and To Do tickets across every Jira project you can access and rates clarity and complexity to help you choose your next ticket. |
 | [write-ticket](write-ticket/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
+| [create-ticket](create-ticket/) | Drafts and creates a Jira ticket with a verified destination and relevant parent. Defaults Trade Tariff work to HMRC Tasks in To Do. |
 | [explain](explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
 | [pr-summary](pr-summary/) | Writes a clear PR title and summary using the included template, with an optional Jira ticket and a deployment risk rating. |
 | [walkthrough](walkthrough/) | Writes a short human check for a browser, native application, or API, with exact actions and visible results. |

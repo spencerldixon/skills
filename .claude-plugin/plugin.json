@@ -1,6 +1,6 @@
 {
   "name": "spencerldixon-skills",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Skills for engineering work: an engineer workflow that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries",
   "author": {
     "name": "Spencer Dixon"
@@ -11,6 +11,7 @@
     "./code-review",
     "./find-work",
     "./write-ticket",
+    "./create-ticket",
     "./explain",
     "./pr-summary",
     "./walkthrough",
