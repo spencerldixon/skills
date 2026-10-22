@@ -8,12 +8,13 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | --- | --- |
 | [engineer](engineer/) | Runs a change from spec to pull request: approved spec, implementation subagent, reviewer subagent, then `ship-it`. |
 | [code-review](code-review/) | Reviews a branch or diff for real problems, each with a concrete failure scenario, and gives a pass or changes-needed verdict. |
-| [find-work](find-work/) | Finds unassigned, unblocked Ready to Start tickets across every Jira project you can access and rates clarity and complexity to help you choose your next ticket. |
+| [find-work](find-work/) | Finds unassigned, unblocked Ready to Start and To Do tickets across every Jira project you can access and rates clarity and complexity to help you choose your next ticket. |
 | [write-ticket](write-ticket/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [explain](explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
 | [pr-summary](pr-summary/) | Writes a clear PR title and summary using the included template, with an optional Jira ticket and a deployment risk rating. |
 | [walkthrough](walkthrough/) | Writes a short human check for a browser, native application, or API, with exact actions and visible results. |
 | [preflight](preflight/) | Checks that a repo's tools, dependencies, services, disk space and one fast spec are ready before agent work starts. |
+| [find-performance-issues](find-performance-issues/) | Finds low to medium effort performance fixes, such as N+1 queries, slow subqueries and repeated work, that give at least a 2x gain, and rates each by effort and gain. |
 | [agent-feedback](agent-feedback/) | Lets agents record lessons and suggest instruction, tool or process changes, for you to approve. |
 | [ship-it](ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, and moves the ticket to In Review. |
 
