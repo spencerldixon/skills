@@ -41,7 +41,7 @@ Keep repository-specific commands and conventions in each repo's `AGENTS.md`. Th
 
 ### Opening human review documents
 
-Before a required approval or human check, open the document in Neovim in a new Ghostty tab using the short command in [`references/human-review.md`](references/human-review.md). If macOS automation is blocked, report that and link the file. No helper scripts or synchronization step are needed.
+Before a required approval or human check, open the document in Neovim in a new focused Rex pane using the short command in [`references/human-review.md`](references/human-review.md). If Rex is unavailable, report that and link the file. No helper scripts or synchronization step are needed.
 
 ## Install
 

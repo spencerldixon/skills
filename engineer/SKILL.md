@@ -29,4 +29,4 @@ Allow two repair rounds per blocker; then report the evidence and the decision n
 
 ## Human approval and checks
 
-Before asking for approval or a human check, save the document and open it per [human-review.md](../references/human-review.md) in Neovim in a **new Ghostty tab**. Ask in chat and wait for an explicit answer before dependent actions.
+Before asking for approval or a human check, save the document and open it per [human-review.md](../references/human-review.md) in Neovim in a **new Rex pane**. Ask in chat and wait for an explicit answer before dependent actions.
