@@ -46,7 +46,7 @@ By the end of the interview, know:
 - Useful links: tickets, pull requests, designs and screenshots. If Slack notifications are in scope, ask for a permalink to a representative message.
 - What proves the work is done.
 - The repositories, if you cannot find them yourself.
-- The output path. If the user has no preference, suggest a slug of the title in the current directory.
+- The output path. If the user has no preference, use `ticket.md` in the work folder from [vault.md](../references/vault.md).
 
 **When the user does not know.** Never fill a gap silently. Close it in this order:
 
@@ -108,7 +108,7 @@ Do not show the user this checklist.
 
 ## 7. Save and hand off
 
-Write the ticket to the agreed `.md` path. Using this skill gives permission to create that one file. It does not give permission to overwrite an existing file. If the path exists, ask whether to overwrite it or use another path. Only in that case, read and follow [human-review.md](../references/human-review.md) for the decision.
+Write the ticket to the agreed `.md` path. Using this skill gives permission to create that one file. It does not give permission to overwrite an existing file. If the path exists, ask whether to overwrite it or use another path. Only in that case, read and follow [show-to-human.md](../references/show-to-human.md) for the decision.
 
 Then give the user:
 

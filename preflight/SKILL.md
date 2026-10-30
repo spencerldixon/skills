@@ -1,6 +1,6 @@
 ---
 name: preflight
-description: Check that a repository can run its tests before implementation starts. Use before agent work, or when asked whether the local environment is ready.
+description: Check that a repository is set up and can run its tests before implementation starts. Use before agent work, or when asked whether the local environment is ready.
 ---
 
 # Preflight

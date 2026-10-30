@@ -18,8 +18,10 @@ Write one or two sentences explaining what the check proves, followed by normall
 
 Check each instruction against source. If permitted tools and the app are available, try the guide without changing live data. Report unavailable checks plainly.
 
-Write to the assigned artifact path when an orchestrator or user supplies one; return only the path and a short outcome. Otherwise return the guide in chat. When presenting it as a required human check, follow [human-review.md](../references/human-review.md) to open the document in Neovim in a new Rex pane before asking.
+Write to the assigned artifact path when an orchestrator or user supplies one; return only the path and a short outcome. 
+
+Otherwise follow [show-to-human.md](../references/show-to-human.md) to show the guide to the user.
 
 ## Language
 
-Use Simplified Technical English, active voice, and one instruction per sentence. Keep steps short and use the same name for the same thing.
+Follow [language.md](../references/language.md). Keep steps short and actionable.
