@@ -1,0 +1,65 @@
+{
+  "skill_name": "engineer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Implement a clear HS-prefix normalization fix in one frontend repo. Acceptance criteria enumerate valid inputs, unchanged text searches and UK/XI parity. No public contract changes. Existing runtime and stubbed request tests work. The test matrix may exceed 100 changed lines.",
+      "expected_output": "Choose lightweight, give a short inline plan, implement in the current agent, run regression tests and lint, use one reviewer and maintain one state note. Do not fetch the full stack or full-workflow reference.",
+      "files": [],
+      "assertions": [
+        "Chooses lightweight despite the larger test matrix",
+        "Uses the current agent for implementation and at most one initial reviewer",
+        "Does not launch scouting or merge agents",
+        "Does not require separate task, spec, steps, build and brief artifacts",
+        "Runs affected tests, lint and repository-mandated checks",
+        "Does not stage, commit, push or mutate Jira without authorization"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Implement a two-line change that widens an admin role's permissions. Tests are straightforward and the ticket is clear.",
+      "expected_output": "Choose full because permissions are security-sensitive, regardless of diff size. Load the full workflow and preserve its approval and review gates.",
+      "files": [],
+      "assertions": [
+        "Chooses full rather than equating a small diff with low risk",
+        "Loads references/full-workflow.md",
+        "Retains explicit spec approval unless already supplied"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Implement a small local search fix, but show me the spec for approval before changing code. Fixture: the relevant tests pass and the criteria are complete.",
+      "expected_output": "Honor the explicit approval gate even on the lightweight path. Show the plan/spec and wait before implementation.",
+      "files": [],
+      "assertions": [
+        "Does not treat implementation authorization as overriding explicit spec approval",
+        "Records the pending decision in the existing state note",
+        "Does not create unnecessary full-workflow artifacts"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Resume this small fix under autopilot. The spec and ship-it --draft are approved in advance; skip the walkthrough. The orchestrator reads steps.md waiting and decision signals. Prior test evidence remains current.",
+      "expected_output": "Reuse current evidence and the compact state note. Keep the required steps.md signals, skip repeated approvals/walkthrough, and preserve draft shipping authorization.",
+      "files": [],
+      "assertions": [
+        "Keeps required orchestrator steps.md signals without generating a full artifact set",
+        "Does not repeat current passing checks or answered approval questions",
+        "Preserves advance spec and draft-shipping approval",
+        "Runs watch-pr only after a PR exists"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "A lightweight fix is implemented. Its one reviewer finds that it changes a shared API contract and needs coordinated changes in another repo. Regression tests already pass locally.",
+      "expected_output": "Escalate to full for the newly discovered boundary, preserving the existing brief and checks. Do not restart all discovery or claim the passing local tests prove cross-repo safety.",
+      "files": [],
+      "assertions": [
+        "Escalates when scope or risk widens",
+        "Reuses prior evidence whose inputs remain unchanged",
+        "Creates only missing full-workflow artifacts",
+        "Reports the cross-repo risk and verification limits"
+      ]
+    }
+  ]
+}

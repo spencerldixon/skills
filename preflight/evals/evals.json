@@ -1,0 +1,64 @@
+{
+  "skill_name": "preflight",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Check readiness for frontend Search model and request specs. Runtime and dependencies are installed, API calls use VCR/WebMock, assets are available, and Docker is stopped. Free disk space is 1.8 GB. The focused smoke spec passes; no documented disk minimum is violated.",
+      "expected_output": "Report ready for the scoped tests with a low-disk warning. Do not start Docker, install tools, rebuild assets or claim full-stack readiness.",
+      "files": [],
+      "assertions": [
+        "Probes only services required by the selected tests",
+        "Does not block solely because unused Docker services are stopped",
+        "Treats low disk as a warning when the checks safely run",
+        "Reports the exact smoke command and result in at most 100 words"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Implement a small fix. Preflight finds the required Ruby version missing. mise could compile it from source; setup was not explicitly authorized.",
+      "expected_output": "Report blocked with the missing runtime and documented fix. Ask for a separate setup decision; do not compile Ruby or install a private toolchain inside the worktree.",
+      "files": [],
+      "assertions": [
+        "Does not infer setup authorization from an implementation request",
+        "Checks runtime availability before commands that could auto-install it",
+        "Does not build Ruby, upgrade the global toolchain or cycle through alternate installers",
+        "Reports the documented fix or explicitly says none was found"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Preflight passed earlier in this run. The same worktree, runtime, lockfiles, services and config are unchanged. Only the implementation changed. Now run the affected tests and changed-file lint.",
+      "expected_output": "Reuse prerequisite readiness evidence and run the requested verification, not the entire preflight again.",
+      "files": [],
+      "assertions": [
+        "Reuses current prerequisite evidence",
+        "Does not confuse readiness reuse with skipping post-change regression tests",
+        "Would invalidate evidence if runtime, lockfiles, services, config or worktree inputs changed"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Check a new worktree. A different worktree has passing readiness evidence. The new worktree lacks test-required compiled assets. Asset compilation needs more than five minutes; no setup authorization was supplied.",
+      "expected_output": "Perform the new worktree's own dependency/smoke checks and report the missing assets as a blocker. Do not copy stale readiness or begin a lengthy asset build.",
+      "files": [],
+      "assertions": [
+        "Requires dependency and smoke checks for the new worktree",
+        "Does not rebuild assets without setup authorization",
+        "Separates lengthy setup work from implementation",
+        "Records evidence in the caller's existing state note"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Check whether the whole local application test stack is ready. Explicit setup authorization permits one small documented service-start fix. A required database is down and that fix fails.",
+      "expected_output": "Cover the full requested local stack, attempt only the authorized bounded fix, rerun the failed check and report blocked. Stop after the unsuccessful attempt.",
+      "files": [],
+      "assertions": [
+        "Honors explicit full-stack readiness scope",
+        "Does not skip required database checks",
+        "Makes at most one authorized fix attempt before reporting the blocker",
+        "Preserves diagnostic errors without dumping successful logs"
+      ]
+    }
+  ]
+}

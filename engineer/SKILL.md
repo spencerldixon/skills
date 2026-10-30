@@ -1,29 +1,33 @@
 ---
 name: engineer
-description: Run a ticket or bounded fix from spec to pull request - approved spec, implementation subagent, code-review, fixer subagent, then ship-it. Use when asked to implement, build or fix a ticket end to end, or to take a change all the way to a pull request.
+description: Implement a ticket or bounded fix, using a lightweight path for small, clear, low-risk changes and a full workflow for larger or risky work. Use when asked to implement, build or fix a ticket end to end, or take it to a pull request.
 ---
 
 # Engineer
 
-Make sure you have all the information needed to work independently before starting. If not, ask clarifying questions before beginning. Do not ask what the request already answers, such as an approval given in advance.
+## Choose the path
 
-## Set up once
+Fetch the ticket once, or reuse complete current content already supplied. Read repo instructions and relevant code with targeted searches/ranges. State the path and reason in one sentence.
 
-1. Read repository instructions; inspect branch, worktree, and checks with `rg -n` and targeted reads. A dirty tree is not a blocker: record a baseline of tracked and relevant untracked files and preserve it. Ask only about ambiguous ownership, conflicting edits, or destructive operations.
-2. Save the task in `task.md`, keyed by the supplied ticket or a descriptive local ID (not a Jira key). Write the goal and the reason for it (who needs the change, and what goes wrong without it), the background the ticket gives, and the checkable outcomes. Agents that read only this file make better choices when they know why. Leave out discussion that does not change what to build.
-3. Use the work folder from [vault.md](../references/vault.md). Reuse this session's folder; for an older run, resume compatible work without overwriting reports, or use a new folder when scope differs.
-4. Create `steps.md` in the work folder. After each step, append one line: the step, its outcome, and the path to its report. Before each question to the user, append `waiting: <question>`; after the answer, append the decision. Read it first when you resume. Preserve completed work: do not rerun passing checks, completed research, or whole agents without a changed input.
-5. On the default branch, create `<task-id>-<short-description>`; on a feature branch, stay. Ask before disturbing a merge, rebase, or detached work. Do not stage, commit, or publish without authorization.
-6. Run `../preflight/SKILL.md`. If `blocked`, report the blockers and stop, unless setup is authorized and the documented fix works.
+**Lightweight by default when all hold:** one repo; small local change; clear acceptance criteria; automated proof; no unresolved product decisions; no auth, permissions, personal-data handling, payments, destructive data changes, migrations, infrastructure or changed public/shared contracts. Testing existing routes or adding a larger test matrix alone does not force the full path.
 
-## Execute
+**Full:** any condition fails, the user requests it, or investigation exposes wider scope/risk. Only then read [full-workflow.md](references/full-workflow.md). On escalation, reuse decisions and passing checks; create only missing artifacts.
 
-1. Resolve any unanswered questions and verify assumptions with targeted `rg -n` checks. Then write `spec.md` in the work folder. If the request approves the spec in advance, check it yourself: each acceptance criterion in the ticket maps to a spec item and a test, and the spec makes no decision the ticket leaves open. Otherwise, or if the check fails, open it per [show-to-human.md](../references/show-to-human.md) and ask for approval. Do not proceed without explicit approval.
-2. Implement the spec with a general-purpose subagent. Give it the paths to `task.md` and `spec.md`, the repository path, and this brief: implement the spec, add or update tests that prove each outcome in `task.md`, run those tests, and return only the changed files, the test commands with their results, and anything left undone.
-3. Run `code-review` yourself, with the work folder. It writes `review.md`.
-4. If the verdict is `changes needed` or the review has Should fix findings, run the `fixer` subagent with the path to `review.md`.
-5. If the fixer changed code for a Blocking finding, or reported one as `not a defect`, run `code-review` again as a repair review: the fix and nearby risks only, written to `review-repair-N.md`. Give it the Blocking findings from the last report as the ticket text, and not the fixer's report: the review checks the code, not the fixer's claims. Then go back to step 4 with that report. Allow two repair rounds per blocker; then report the evidence and the decision needed.
-6. Report the review, the output of `fixer`, and a roundup of the changes we've made in plain English.
-7. Ask the user if they would like a manual walkthrough. If yes, run `walkthrough` and open it per [show-to-human.md](../references/show-to-human.md).
-8. Ask the user if they're happy to ship the changes. If so, run `ship-it`.
-9. Run `watch-pr` and notify me with anything that needs my attention.
+## Shared safeguards
+
+- Inspect branch/worktrees and baseline tracked/relevant untracked changes; preserve unrelated work. On the default branch create `<task-id>-<short-description>`; stay on a compatible feature branch. Ask before disturbing merges, rebases, detached work or ambiguous ownership.
+- Use [vault.md](../references/vault.md) for the work folder and state note. Resume from saved state rather than restarting discovery.
+- Staging, commits, pushes, PRs and Jira mutations require authorization. Preserve advance spec/shipping approval and draft mode.
+
+## Lightweight
+
+1. **Plan:** give a short inline goal, reason, acceptance criteria and test commands. An implementation request approves a plan making no new product decisions. Ask about missing decisions; honor explicit spec-approval gates.
+2. **Ready:** run [preflight](../preflight/SKILL.md) for those tests. Stop on setup blockers rather than rebuilding the environment.
+3. **Implement here:** this agent writes regression tests and the minimal fix. Verify a bug regression fails for the intended reason before the fix, then passes. Run affected tests, changed-file lint and repo-mandated checks; expand when callers or failures justify it.
+4. **Review once:** use one independent read-only reviewer, or review here if delegation is unavailable. Supply the compact brief, baseline/diff command, relevant paths and test results. Check the diff, affected callers and regression coverage; return findings with file/line evidence and limits. Where supported, expose code-reading tools only. This replaces the full code-review workflow on this path: no scouting or merge agents. Fix confirmed findings here and rerun affected checks. Request focused repair review for Blocking fixes; after two failed repair rounds, stop with evidence and the decision needed. Escalate wider scope/risk.
+5. **Record:** keep one short `<id>.md` state note: goal/criteria, repo/branch, decisions, checks/results, review verdict/limits and next action. Update at milestones and before stopping. Separate task/spec/build/brief/review files are unnecessary. If an orchestrator requires `steps.md`, retain only its progress and `waiting:`/decision signals there.
+6. **Finish:** report changes, checks and limits. Offer walkthrough/shipping together unless already answered. If authorized, run ship-it; run watch-pr only after a PR exists. Otherwise stop for the user.
+
+## Context budget
+
+Use tiny Obsidian budgets first, increasing only for missing relevant evidence. Reuse the compact brief and results. Batch independent reads; bound output to summaries/errors without hiding acceptance criteria or relevant code. Pass workers facts, not instructions to rediscover Jira, the vault or the conversation. Record elapsed time and fresh/cache/output usage when available; budgets never excuse incomplete verification.

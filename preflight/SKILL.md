@@ -5,15 +5,15 @@ description: Check that a repository is set up and can run its tests before impl
 
 # Preflight
 
-Find what blocks work, fast. Change nothing unless setup is authorized.
+Diagnose readiness for the intended checks, not an environment rebuild.
 
-1. Read repository instructions (`AGENTS.md`, `CLAUDE.md`, README) for tool versions, services, and the test command. Use `rg -n`; read only needed ranges.
-2. Run each check and record the command and result:
-   - Tool versions match the version files (`mise current` or equivalent).
-   - Dependencies are installed (`bundle check`, `npm ls --depth=0`, or equivalent).
-   - Each documented service (database, cache, search) responds on its documented host and port.
-   - Free disk space is at least 2 GB.
-   - If the checks above pass, one existing fast spec file passes with the documented test command.
-3. For a failure, find the documented fix. Run it only if setup is authorized, then repeat the check.
+1. **Scope:** name the test/lint commands and their prerequisites. Reuse repo instructions already read; otherwise search/read relevant ranges. A general readiness request covers the documented local test stack; state that broader scope.
+2. **Check once:** batch cheap read-only checks; retain exact commands/results.
+   - Verify required runtime versions and dependencies (`bundle check`, `npm ls --depth=0`, or equivalent). Reuse an existing verified toolchain available to the worktree. Check availability before commands that auto-install; avoid unrelated inherited tools or per-worktree runtime builds.
+   - Probe only required services. VCR/WebMock tests need no live backend unless setup says otherwise. Avoid starting the full stack for isolated tests.
+   - Check disk. Below 2 GB is a warning; block if a documented minimum is unmet, a check cannot safely run or a required write fails. A warning authorizes neither cleanup nor installation.
+   - Run one existing fast relevant spec once prerequisites pass, plus required lint/runtime smoke checks. Build assets only if required and setup is authorized; otherwise missing assets block readiness.
+3. **Reuse:** passing evidence from this run remains valid while runtime, lockfiles, services/config and worktree inputs are unchanged. A new worktree needs its own dependency/smoke check. Repeat failed or invalidated checks, not the entire preflight. Implementation changes still require regression tests.
+4. **Setup blocker:** report the exact error and smallest documented fix (or none found). An implementation request alone does not authorize runtime/dependency installation, asset builds or service provisioning. With explicit setup authorization, try one bounded documented fix and rerun the failed check. Source compilation, toolchain upgrades, destructive cleanup, undocumented work or more than about five minutes require a separate setup decision first. After one unsuccessful attempt, stop. Global toolchain changes need explicit authorization.
 
-Report `ready` or `blocked`, each failed check with its exact error and documented fix, in at most 100 words.
+Report `ready` or `blocked` in at most 100 words: scope, smoke command/result, warnings and blockers/fixes. Save evidence in the caller's existing state note, not a separate report. Bound successful output; preserve failure diagnostics. `ready` covers only the stated checks, not the full stack.
