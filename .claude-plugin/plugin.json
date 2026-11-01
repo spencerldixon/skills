@@ -1,24 +1,28 @@
 {
   "name": "spencerldixon-skills",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Skills for engineering work: an engineer workflow that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries",
   "author": {
     "name": "Spencer Dixon"
   },
   "repository": "https://github.com/spencerldixon/skills",
   "skills": [
-    "./engineer",
-    "./code-review",
-    "./find-work",
-    "./write-ticket",
-    "./create-ticket",
-    "./explain",
-    "./pr-summary",
-    "./walkthrough",
-    "./ship-it",
-    "./preflight",
-    "./find-performance-issues",
-    "./autopilot",
-    "./watch-pr"
+    "./beta/engineer",
+    "./beta/code-review",
+    "./beta/find-work",
+    "./skills/write-ticket",
+    "./skills/create-ticket",
+    "./skills/explain",
+    "./skills/pr-summary",
+    "./skills/walkthrough",
+    "./skills/ship-it",
+    "./beta/preflight",
+    "./beta/find-performance-issues",
+    "./beta/autopilot",
+    "./beta/watch-pr",
+    "./beta/pick-up",
+    "./beta/standup",
+    "./beta/remember-this",
+    "./beta/goblin"
   ]
 }

@@ -1,0 +1,63 @@
+{
+  "skill_name": "watch-pr",
+  "evals": [
+    {
+      "id": "stale-ci",
+      "prompt": "Check this watched draft PR once. GitHub head is b222. Required checks are lint and tests. Both succeeded on a111; lint is queued on b222 and tests has not reported on b222. Approval and mergeability are confirmed. No review threads are open. Persisted watch state says CI green on a111. All runtime capabilities are available. What do you do and report now?",
+      "expected_output": "Wait for current-head checks. Do not mark the draft ready, update Jira, claim CI recovery or report ready-to-merge.",
+      "assertions": [
+        "Treats previous green CI as stale",
+        "Requires both required checks on b222",
+        "Does not mark the draft ready or update Jira",
+        "Records the current head and pending CI"
+      ]
+    },
+    {
+      "id": "external-update",
+      "prompt": "Continue watching this PR. The fixer validated a fix in its worktree against head a111. Its one-file change is still uncommitted. Immediately before committing, GitHub reports head c333, pushed by a teammate; the new commit changes the same function. The worktree is still based on a111. Previous validation passed only for the worktree based on a111. No other worker is active. What do you do and report now?",
+      "expected_output": "Do not push or reuse validation from the old base. Have the fixer reassess the finding against c333, preserve existing work, and rerun appropriate validation before any push. Escalate if the changes conflict or require a decision.",
+      "assertions": [
+        "Detects the external head change before mutation",
+        "Does not push the old-base fix or force push",
+        "Reassesses whether the finding still applies",
+        "Requires validation after adapting to c333",
+        "Preserves existing work"
+      ]
+    },
+    {
+      "id": "repeated-and-edited-comment",
+      "prompt": "Watch the same PR for two successive rounds, with all runtime capabilities available. Initial state: comment ID 42, updated_at 2026-11-01T10:00:00Z, was assessed and fixed in b222; its new-comment and fix-pushed events were already reported. GitHub head is still b222; CI is still running; no other events changed. Round A returns comment 42 unchanged. Round B returns the same ID with updated_at 2026-11-01T10:20:00Z and a new request: 'Also cover an empty string; the existing test only covers null.' Its full thread is available. What do you do and report in each round?",
+      "expected_output": "Round A does not redispatch or repeat notifications. Round B dispatches the edited comment to the fixer with its full context and previous attempt, and reports the new event without declaring the edit fixed prematurely.",
+      "assertions": [
+        "Does not dispatch or repeat already reported events in round A",
+        "Distinguishes an edited comment from an unchanged ID in round B",
+        "Sends the edited request and prior context to the fixer",
+        "Does not claim a fix before the worker and validation complete"
+      ]
+    },
+    {
+      "id": "interrupted-push",
+      "prompt": "Resume a watcher after its process exited during git push. Persisted state has phase pushing, original head a111, intended fix commit b222 and problem attempts 1. The last reported event was the review comment, before the repair. GitHub now reports the PR head b222 and confirms that exact repair commit is present. Its worktree is clean at b222, no worker is running, and required CI is queued on b222. What do you do and report now?",
+      "expected_output": "Reconcile the completed push from remote evidence. Record the repair as pushed once, keep one attempt, report fix pushed with CI pending, and continue checking b222 without another repair or push.",
+      "assertions": [
+        "Verifies the intended commit is already remote",
+        "Does not rerun the repair, recommit or push again",
+        "Does not count recovery as another repair attempt",
+        "Records b222 and pending CI before continuing",
+        "Reports the previously unreported pushed fix without claiming CI success"
+      ]
+    },
+    {
+      "id": "runtime-defaults",
+      "prompt": "Watch supplied PR https://github.com/example/app/pull/12. The host provides a GitHub connector and delegation with the configured model, but no model-selection override, no scheduler, no gh CLI and no Atlassian connector. A new lint failure is reported on current head b222; its logs and a clean worktree are available. No repair has started. What do you do now?",
+      "expected_output": "Check the supplied PR through the GitHub connector, delegate assessment with the configured model and original evidence, and report the lack of continuous scheduling. Do not require a named model, install another runtime, or pretend a recurring loop exists.",
+      "assertions": [
+        "Uses the available GitHub connector without requiring gh or Jira",
+        "Delegates assessment using the configured model without selecting a named provider or model",
+        "Provides the fixer the original failure evidence and current SHA",
+        "Reports that the check is one-shot because scheduling is unavailable",
+        "Does not install another CLI or claim continuous monitoring"
+      ]
+    }
+  ]
+}

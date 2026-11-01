@@ -1,0 +1,100 @@
+{
+  "skill_name": "preflight",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Check readiness for frontend Search model and request specs. Runtime and dependencies are installed, API calls use VCR/WebMock, assets are available, and Docker is stopped. Free disk space is 1.8 GB. The focused smoke spec passes; no documented disk minimum is violated.",
+      "expected_output": "Report ready for the scoped tests with a low-disk warning. Do not start Docker, install tools, rebuild assets or claim full-stack readiness.",
+      "files": [],
+      "assertions": [
+        "Probes only the services and tooling the selected tests need",
+        "Runs the probes as one batched command",
+        "Does not block solely because unused Docker services are stopped",
+        "Treats low disk as a warning when the checks safely run",
+        "Reports the exact smoke command and result in at most 100 words"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Implement a small fix. Preflight finds the required Ruby version missing. mise could compile it from source; setup was not explicitly authorized.",
+      "expected_output": "Report blocked with the missing runtime and documented fix. Ask for a separate setup decision; do not compile Ruby or install a private toolchain inside the worktree.",
+      "files": [],
+      "assertions": [
+        "Does not infer setup authorization from an implementation request",
+        "Checks runtime availability before commands that could auto-install it",
+        "Skips the smoke spec because a probe failed",
+        "Does not build Ruby, upgrade the global toolchain or cycle through alternate installers",
+        "Reports the documented fix or explicitly says none was found"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Preflight passed earlier in this run. The same worktree, runtime, lockfiles, services and config are unchanged. Only the implementation changed. Is the environment still ready?",
+      "expected_output": "Reuse the earlier evidence and report ready without rerunning probes or the smoke spec.",
+      "files": [],
+      "assertions": [
+        "Reuses current prerequisite evidence without rerunning probes or the smoke spec",
+        "Names the changes that would invalidate the evidence: runtime, lockfiles, services, config or worktree"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Check a new worktree. A different worktree has passing readiness evidence. The new worktree lacks test-required compiled assets. Asset compilation needs more than five minutes; no setup authorization was supplied.",
+      "expected_output": "Run the new worktree's own dependency probes, skip the smoke spec because the asset probe failed, and report the missing assets as a blocker. Do not copy stale readiness or begin a lengthy asset build.",
+      "files": [],
+      "assertions": [
+        "Runs its own dependency probes instead of reusing the other worktree's evidence",
+        "Skips the smoke spec because a probe failed",
+        "Does not rebuild assets without setup authorization",
+        "Records evidence in the caller's existing state note"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Check whether the whole local application test stack is ready. Explicit setup authorization permits one small documented service-start fix. A required database is down and that fix fails.",
+      "expected_output": "Cover the full requested local stack, attempt only the authorized bounded fix, rerun the failed check and report blocked. Stop after the unsuccessful attempt.",
+      "files": [],
+      "assertions": [
+        "Honors explicit full-stack readiness scope",
+        "Does not skip required database checks",
+        "Makes at most one authorized fix attempt",
+        "Reruns the failed check after the fix attempt, then stops",
+        "Preserves diagnostic errors without dumping successful logs"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Earlier in this run you read the repo's AGENTS.md, which says tests run with `bundle exec rspec` and lint with `bundle exec rubocop`, and that VCR covers external APIs. Now check readiness for the Orders request specs. Runtime, gems and Postgres are fine; the smoke spec passes.",
+      "expected_output": "Take the commands from the instructions already read, run one batched probe and one smoke spec, and report ready.",
+      "files": [],
+      "assertions": [
+        "Reuses the repo instructions already read instead of searching or rereading docs",
+        "Runs the probes as one batched command",
+        "Does not probe external API services covered by VCR",
+        "Reports ready in at most 100 words"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Check readiness for the Billing model specs on an existing feature branch. Runtime, gems and Postgres are fine and the smoke spec passes. The branch is 12 commits behind origin's default branch, including a Gemfile.lock change.",
+      "expected_output": "Report ready with a warning that the branch is 12 commits behind. Do not pull, merge or rebase.",
+      "files": [],
+      "assertions": [
+        "Checks freshness against origin's default branch inside the batched probe",
+        "Reports commits behind as a warning, not a blocker",
+        "Does not pull, merge, rebase or reinstall gems"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Check readiness for the Chapter model specs. Runtime, gems, Postgres and Redis are fine and the smoke spec passes. The branch adds a migration in db/migrate that the test database has not applied.",
+      "expected_output": "Report blocked on the pending migration, even though the smoke spec passes. Name the documented test database prepare command as the fix; do not run it without setup authorization.",
+      "files": [],
+      "assertions": [
+        "Compares the newest db/migrate file with the test database inside the batched probe",
+        "Reports the pending migration as a blocker even though the smoke spec passed",
+        "Does not migrate or rebuild the test database without setup authorization"
+      ]
+    }
+  ]
+}
