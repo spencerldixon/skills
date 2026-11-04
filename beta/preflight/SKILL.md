@@ -10,4 +10,4 @@ Prove the intended checks can run. Leave the environment as you found it.
 3. **Smoke:** once the probes pass, run one fast existing spec once. The evidence holds while runtime, lockfiles, services, config and worktree stay unchanged. A new worktree needs its own check.
 4. **Blocked:** report the exact error and the smallest documented fix, or say none was found. Install, build or start anything only with explicit setup authorization: one bounded attempt, rerun the failed check, then stop.
 
-Report `ready` or `blocked` in under 100 words: scope, smoke command and result, warnings. Quote failures and omit passing logs. Save the result in the caller's state note.
+Report `ready` or `blocked` in under 100 words: scope, smoke command and result, warnings. Quote failures and omit passing logs. Return evidence to the caller; update its existing wiki handoff only when the result matters for continuation. Routine passing checks stay in session context. Follow [vault.md](../../references/vault.md): no separate local report or save-permission prompt.

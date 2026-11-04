@@ -9,10 +9,10 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [goblin](beta/goblin/) | Fixes one demonstrable developer annoyance within 20 added plus deleted lines, with no new dependencies. Uses Sonnet in Claude Code. |
 | [pick-up](beta/pick-up/) | Recovers unfinished work from the branch, ticket and PR, checks stale handoffs, and identifies the next action. |
 | [standup](beta/standup/) | Drafts a short daily update from verified activity, grouping work by outcome and marking inferred plans. |
-| [remember-this](beta/remember-this/) | Saves durable findings to the shared vault, verifying claims and updating existing notes without duplication. |
+| [remember-this](beta/remember-this/) | Saves significant project knowledge, gotchas, decisions or essential WIP context, verifying claims and updating existing notes without duplication. |
 | [engineer](beta/engineer/) | Runs a change from spec to pull request: approved spec, implementation subagent, `code-review`, fixer subagent, then `ship-it`. |
 | [code-review](beta/code-review/) | Reviews a branch or diff with a context scout and two independent reviews, merges every point into one report, and gives a pass or changes-needed verdict. |
-| [find-work](beta/find-work/) | Finds unassigned, unblocked Ready to Start and To Do tickets on boards 155 (HMRC) and 298 (AI), scores clarity, size, risk and proof, and triages each into Auto, Guided, Sharpen, Waiting or Split to help you or autopilot choose the next ticket. Caches the report in the vault for a day. |
+| [find-work](beta/find-work/) | Finds unassigned, unblocked Ready to Start and To Do tickets on boards 155 (HMRC) and 298 (AI), scores clarity, size, risk and proof, and triages each into Auto, Guided, Sharpen, Waiting or Split to help you or autopilot choose the next ticket. Returns results in the session without a vault report. |
 | [write-ticket](skills/write-ticket/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [create-ticket](skills/create-ticket/) | Drafts and creates a Jira ticket with a verified destination and relevant parent. Defaults Trade Tariff work to HMRC Tasks in To Do. |
 | [explain](skills/explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
@@ -37,7 +37,7 @@ Ask for a ticket implementation or a bounded fix. The engineer:
 
 Reports are written once. Agents start with fresh context, receive file paths, and return a path plus a short outcome. The coordinator keeps verification and decisions in one `steps.md`.
 
-Artifacts go to the Obsidian vault, in `~/wiki/wiki/projects/<project>/<id>/`, with its current state in `<id>.md` there, as [`references/vault.md`](references/vault.md) describes. No Jira key is required for local work. Dirty trees are recorded and preserved; only ambiguous or conflicting edits require a decision.
+`~/wiki` is the only persistent store for agent artifacts. Keep only significant project knowledge, gotchas, consequential decisions, essential WIP and documents still needed by active work. Routine progress stays in session context. Agents maintain the wiki without asking conversational permission: update canonical notes, consolidate duplicates and recoverably cull outdated or spent material. Tool-enforced approvals still apply. [`references/vault.md`](references/vault.md) defines the quality gate, maintenance and paths. No Jira key is required. Dirty trees are preserved; only ambiguous or conflicting edits require a decision.
 
 ### Customising the agents
 

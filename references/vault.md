@@ -1,33 +1,52 @@
-# Vault
+# Wiki quality and maintenance
 
-Save Markdown files in the Obsidian vault at `~/wiki`, following `~/wiki/schema.md`. Treat it as local storage. Use absolute paths. Create folders as needed.
+`~/wiki` is the only persistent store for agent notes, handoffs, working documents and operational state. Keep routine progress in session context. Persist only information that materially improves project understanding or is needed to continue active work; there is no separate local artifact store.
+
+## Quality gate
+
+Before saving, identify the future decision, mistake, costly rediscovery or active handoff the content supports. If there is no concrete answer, keep it in session context. An explicit request to remember something is sufficient reason to save it concisely.
+
+Keep:
+
+- **Project understanding:** non-obvious architecture, cross-repository relationships, domain rules and constraints that materially change how work should be done.
+- **Gotchas and decisions:** verified traps, important workarounds, consequential decisions and their rationale that are not clear from code or existing docs.
+- **Essential WIP:** the goal, repo/branch or PR, critical decisions, blocker, verification limits and next action that would otherwise be costly to reconstruct.
+- **Necessary working documents:** a spec awaiting approval, a report needed by another agent or active orchestration state. Keep only what the current workflow needs, then distill useful knowledge and cull the spent artifacts.
+
+Routine completion summaries, copied tickets, raw logs, PR polling history and facts available through a quick lookup do not earn permanent notes. A milestone or completed task alone is not a reason to write. Prefer one concise canonical note over multiple overlapping files.
 
 ## Paths
 
+Follow `~/wiki/schema.md` and the relevant memory guide. Use absolute paths within `~/wiki`.
+
 ```text
 ~/wiki/wiki/projects/<project>/
-  <project>.md          project hub: lists the repos and links every note in the folder
-  <id>/                 work folder, one per ticket or piece of work
-    <id>.md             the ticket's note: current state at the top, then detail
-    ticket.md, task.md, spec.md, steps.md, review.md, watch.md and other working files
-  <slug>.md             general notes not tied to one ticket
-  review-misses.md      points from human reviewers that code-review missed, one line each: cases for code-review evals
+  <project>.md          project hub, linking useful project notes
+  <slug>.md             significant project knowledge
+  <id>/                 only when active work needs persistent artifacts
+    <id>.md             compact current handoff, not an activity log
+    spec.md, review.md  only when required by the current workflow
 ~/wiki/wiki/projects/agent-tooling/
-  autopilot.md          autopilot state, across projects
-  STOP                  autopilot stop file
-  find-work-report.md   latest find-work report; each fresh run replaces it
+  autopilot.md          current active orchestration state
 ```
 
-- **`<repo>`:** the name of the main repository folder, also from a worktree: `basename "$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"`.
-- **`<project>`:** the project whose hub lists `<repo>`. If no hub does, use `<repo>` and create the hub from `~/wiki/templates/project-hub.md`. A ticket that changes several repos stays in one project.
-- **`<id>`:** the Jira key in lowercase, for example `app-1234`, from the request or the branch name. With no key, use the branch name with `/` replaced by `-`. For a new ticket with no key yet, use a slug of its title.
-- **Work folder:** `~/wiki/wiki/projects/<project>/<id>/`.
+- **`<repo>`:** the main repository folder name, also from a worktree: `basename "$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"`.
+- **`<project>`:** the project whose hub lists the repo; otherwise use the repo name. Create a hub only when useful content needs it, following the wiki schema.
+- **`<id>`:** the lowercase Jira key, or branch name with `/` replaced by `-`; for a new ticket, a slug of its title.
+- **Work folder:** `~/wiki/wiki/projects/<project>/<id>/`. An explicitly supplied artifact directory must also be inside `~/wiki`.
 
-## Rules
+Search for existing knowledge or handoffs first. Update the canonical note rather than creating a duplicate. Resume from relevant current evidence; verify stale claims before reuse. Keep links and frontmatter consistent with the wiki schema. Leave repository source files in their repository; this policy concerns agent artifacts, not product code.
 
-- Give `<id>.md` and notes outside a work folder the schema's frontmatter (templates in `~/wiki/templates/`), and link them from the project hub. Link working files with Markdown links such as `[spec](spec.md)`, not `[[ ]]`: the vault's index and lint skip them.
-- If the project folder has an older `<id>.md`, move it into the work folder rather than making a second note.
-- Keep `<id>.md` current as you work and before you stop: what is done, branches and PRs, what is blocked, and the next step.
-- Do not overwrite a file that this run did not write, except files a skill says it updates or replaces.
-- Do not edit `index.md`: it is autogenerated.
-- If a file reads as `Resource deadlock avoided`, it is an online-only Synology copy. Report it, and do not recreate or overwrite it.
+## Autonomous maintenance
+
+Creating, editing, consolidating and culling wiki content is standing user-authorized maintenance. Act without asking conversational permission or offering to save something first. Use supported Obsidian tools when available; honor any tool-enforced approval or safety boundary rather than bypassing it.
+
+Maintain the relevant notes as part of the work, not through an indiscriminate vault sweep:
+
+- Verify technical claims and distinguish facts, hypotheses and decisions. Include sources and verification dates for claims that can change.
+- Correct outdated content when current evidence establishes the replacement; preserve still-useful rationale and unrelated knowledge. Uncertain age alone is not proof of obsolescence.
+- Consolidate duplicates into the canonical note and repair affected links before retiring redundant notes.
+- Refresh WIP as a current snapshot. When work ends, retain only important knowledge or unresolved follow-up, and cull obsolete handoffs, spent specs/reviews and low-value agent artifacts.
+- Prefer recoverable trash for whole-note culling. Inspect an explicit note before retiring it and verify that no unique useful context or active work is lost. No permanent deletion or broad recursive cleanup as routine maintenance.
+
+Keep credentials and transcripts out. Leave `index.md` and other autogenerated files unchanged. If a file reads as `Resource deadlock avoided`, report the online-only Synology copy; do not recreate or overwrite it.

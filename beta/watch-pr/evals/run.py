@@ -12,6 +12,8 @@ def main():
     parser.add_argument('--output-dir', type=Path)
     parser.add_argument('--prepare-only', action='store_true',
                         help='Write requests without invoking an evaluator')
+    parser.add_argument('--no-skill', action='store_true',
+                        help='Omit the skill, to measure a baseline')
     parser.add_argument('--command', nargs=argparse.REMAINDER,
                         help='Tool-disabled evaluator command accepting stdin; put last')
     args = parser.parse_args()
@@ -27,12 +29,13 @@ def main():
     blocked = False
     for case in cases:
         prompt = (
-            'Apply this skill to the fixture. This is a tabletop evaluation: '
-            'fixture observations are authoritative and tools are disabled. '
-            'Describe concrete next actions, persisted state changes and the '
-            'exact user-facing update (or say no update). Do not grade yourself '
-            'or perform external actions.\n\n<skill>\n' + skill +
-            '\n</skill>\n\n<fixture>\n' + case['prompt'] + '\n</fixture>'
+            'You are watching GitHub pull requests for the user. This is a '
+            'tabletop evaluation: fixture observations are authoritative and '
+            'tools are disabled. Describe concrete next actions, including '
+            'commands, and the exact user-facing update (or say no update). '
+            'Do not grade yourself or perform external actions.\n\n' +
+            ('' if args.no_skill else '<skill>\n' + skill + '\n</skill>\n\n') +
+            '<fixture>\n' + case['prompt'] + '\n</fixture>'
         )
         (output / f'{case["id"]}.prompt.txt').write_text(prompt)
         record = {'id': case['id']}

@@ -46,7 +46,7 @@
         "Runs its own dependency probes instead of reusing the other worktree's evidence",
         "Skips the smoke spec because a probe failed",
         "Does not rebuild assets without setup authorization",
-        "Records evidence in the caller's existing state note"
+        "Returns evidence to the caller and updates an existing wiki handoff only if the blocker matters for continuation; creates no separate local report and asks no conversational save permission"
       ]
     },
     {
