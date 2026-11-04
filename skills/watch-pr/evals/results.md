@@ -32,14 +32,14 @@ The skill changes scope discipline, the report format, full reports on every run
 Prepare requests without invoking a model:
 
 ```sh
-python3 beta/watch-pr/evals/run.py --prepare-only
+python3 skills/watch-pr/evals/run.py --prepare-only
 ```
 
 Run with the skill, then without it. Keep user settings out, so hooks and personal instructions do not affect the answers:
 
 ```sh
-python3 beta/watch-pr/evals/run.py --output-dir /tmp/watch-pr-with --command claude -p --setting-sources "" --strict-mcp-config --model claude-opus-5-5 --tools ""
-python3 beta/watch-pr/evals/run.py --no-skill --output-dir /tmp/watch-pr-without --command claude -p --setting-sources "" --strict-mcp-config --model claude-opus-5-5 --tools ""
+python3 skills/watch-pr/evals/run.py --output-dir /tmp/watch-pr-with --command claude -p --setting-sources "" --strict-mcp-config --model claude-opus-5-5 --tools ""
+python3 skills/watch-pr/evals/run.py --no-skill --output-dir /tmp/watch-pr-without --command claude -p --setting-sources "" --strict-mcp-config --model claude-opus-5-5 --tools ""
 ```
 
 `--bare` does not work for a logged-in CLI, because it skips login. The runner stores responses in `results.json` and never scores them. Score each response against the assertions in `evals.json`.
@@ -49,10 +49,10 @@ python3 beta/watch-pr/evals/run.py --no-skill --output-dir /tmp/watch-pr-without
 `local_fixture.py` builds a local Git-backed fake GitHub for running a watcher against real repositories. It has not been run against the current skill.
 
 ```sh
-python3 beta/watch-pr/evals/local_fixture.py setup /tmp/watch-pr-sandbox
-python3 beta/watch-pr/evals/local_fixture.py gh /tmp/watch-pr-sandbox/lifecycle pr view fixture
-python3 beta/watch-pr/evals/local_fixture.py advance /tmp/watch-pr-sandbox/lifecycle failure
-python3 beta/watch-pr/evals/local_fixture.py advance /tmp/watch-pr-sandbox/lifecycle edited-comment
+python3 skills/watch-pr/evals/local_fixture.py setup /tmp/watch-pr-sandbox
+python3 skills/watch-pr/evals/local_fixture.py gh /tmp/watch-pr-sandbox/lifecycle pr view fixture
+python3 skills/watch-pr/evals/local_fixture.py advance /tmp/watch-pr-sandbox/lifecycle failure
+python3 skills/watch-pr/evals/local_fixture.py advance /tmp/watch-pr-sandbox/lifecycle edited-comment
 ```
 
 Real GitHub behaviour, hosted CI and scheduling are untested.
