@@ -54,7 +54,7 @@ With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it ag
 
 ## 5. Update Jira once
 
-1. Add one comment to the ticket with `contentFormat: "markdown"`, in this shape:
+1. Add one unrestricted comment with only `cloudId`, `issueIdOrKey`, `commentBody` and `contentFormat: "markdown"`. Omit `commentVisibility` and `commentId`; empty strings or objects are not substitutes for omission. If the direct tool requires these optional fields, use an existing MCP client call path that preserves omission. If none is available, stop and report the schema limitation. Use this comment shape:
 
    ```markdown
    <One sentence that says what the pull request does.>
@@ -63,6 +63,8 @@ With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it ag
    ```
 
    Write each URL as a Markdown link, as shown. Jira does not turn a bare URL into a link. With several pull requests, write one sentence for the whole change and list every pull request, one per line. Post one comment, never one per repository. If the ticket already has a comment with these links, do not post again.
+
+   On a validation error, inspect the failed request, field error and server schema. Make at most one corrected retry; never guess role or group values. If the write outcome is uncertain, read the comments before retrying to avoid duplicates. Read the comments back and confirm the PR links exist before moving the ticket or reporting success. If verification fails, stop and report.
 2. Move the ticket to **In Review** or equivalent review status. Get the ticket's available transitions and use the one whose target status is In Review or Review. Never guess a transition ID. If the ticket is already In Review, skip this. If no transition leads there, leave the status and report the transitions that are available.
 
 ## 6. Report
