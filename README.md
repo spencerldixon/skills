@@ -9,7 +9,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [goblin](beta/goblin/) | Fixes one demonstrable developer annoyance within 20 added plus deleted lines, with no new dependencies. Uses Opus in Claude Code. |
 | [standup](skills/standup/) | Drafts a short daily update from verified activity, grouping work by outcome and marking inferred plans. |
 | [code-review](beta/code-review/) | Reviews a branch or diff with a context scout and two independent reviews, merges every point into one report, and gives a pass or changes-needed verdict. |
-| [find-work](beta/find-work/) | Finds up to 10 unassigned, unblocked HMRC and AI Jira tickets, rates clarity, complexity and size, and returns one ranked table to help you choose the next ticket. Read-only. |
+| [find-work](beta/find-work/) | Finds up to 10 unassigned, unblocked HMRC, AI and MYOTT (board 291) Jira tickets, rates clarity, complexity and size, and returns one ranked table to help you choose the next ticket. Read-only. |
 | [write-ticket](skills/write-ticket/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [create-ticket](skills/create-ticket/) | Drafts and creates a Jira ticket with a verified destination and relevant parent. Defaults Trade Tariff work to HMRC Tasks in To Do. |
 | [explain](skills/explain/) | Explains a ticket, file, or codebase concept in plain English with context and examples. |
