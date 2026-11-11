@@ -13,6 +13,7 @@ Use the GitHub MCP for pull requests (else `gh`) and the Jira (Atlassian) MCP fo
 
 - **Ticket key**, such as `HMRC-1234`: from the user's message, the conversation or the branch name. If there is none, ask. Never invent one. Read the ticket with the Jira MCP to confirm it exists; use its title to name the branch.
 - **Repositories:** the current one, plus any the user names or you changed for this ticket in this session. Skip a repository with no uncommitted changes and no commits ahead of its default branch.
+- **Repository requirements:** read each repository's instructions (`AGENTS.md`, `CLAUDE.md`) and pull request template for its PR title format, description template, commit format and risk label rules. When none are stated, the `pr-summary` defaults apply.
 
 Do steps 2 to 4 for each repository. Do step 5 once, after every pull request is open.
 
@@ -49,7 +50,7 @@ Find the default branch with `git symbolic-ref --short refs/remotes/origin/HEAD`
 
 If any repository fails in steps 2 to 4, stop before step 5 and report what was done. A second run reuses the pushed branches and open pull requests.
 
-With `--draft`, skip step 5. `watch-pr` updates Jira when it marks the draft ready. In the report, write "not updated: draft" in place of the Jira status.
+With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it again without `--draft`. In the report, write "not updated: draft" in place of the Jira status.
 
 ## 5. Update Jira once
 
@@ -75,7 +76,7 @@ End with only this:
 **Jira:** https://transformuk.atlassian.net/browse/<KEY> (moved to <STATUS>)
 ```
 
-Replace "moved to In Review" with the reason when the ticket did not move. Add one line for anything left out, such as uncommitted unrelated changes or skipped repositories.
+Replace `moved to <STATUS>` with the reason when the ticket did not move. Add one line for anything left out, such as uncommitted unrelated changes or skipped repositories.
 
 ## Language
 

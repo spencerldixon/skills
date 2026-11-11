@@ -26,8 +26,6 @@ Follow `~/wiki/schema.md` and the relevant memory guide. Use absolute paths with
   <id>/                 only when active work needs persistent artifacts
     <id>.md             compact current handoff, not an activity log
     spec.md, review.md  only when required by the current workflow
-~/wiki/wiki/projects/agent-tooling/
-  autopilot.md          current active orchestration state
 ```
 
 - **`<repo>`:** the main repository folder name, also from a worktree: `basename "$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"`.

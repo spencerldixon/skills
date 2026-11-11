@@ -2,14 +2,14 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "spencerldixon-skills",
   "version": "0.13.0",
-  "description": "Skills for engineering work: an engineer workflow that runs a ticket to a pull request with subagents, code review, tickets, explanations and PR summaries",
+  "description": "Skills for engineering work: tickets, code review, explanations, PR summaries, shipping and PR watching",
   "author": {
     "name": "Spencer Dixon"
   },
   "skills": "./",
   "interface": {
     "displayName": "Spencer Dixon's skills",
-    "shortDescription": "Ticket to pull request with subagents, plus review, tickets and PR summaries",
+    "shortDescription": "Tickets, code review, PR summaries, shipping and PR watching",
     "category": "Productivity",
     "websiteURL": "https://github.com/spencerldixon/skills"
   }

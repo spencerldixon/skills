@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review a branch or diff for every change the author should make - bugs, risks, design, tests and docs, including effects on other repos - and give a pass or changes-needed verdict that only blocking findings fail. Use when asked to review code, a diff, a branch or a pull request, or when the engineer workflow reaches review.
+description: Review a branch or diff for every change the author should make - bugs, risks, design, tests and docs, including effects on other repos - and give a pass or changes-needed verdict that only blocking findings fail. Use when asked to review code, a diff, a branch or a pull request.
 ---
 
 # Code review
@@ -59,7 +59,7 @@ Done when each review file exists.
 
 ## 4. Merge
 
-When you also coordinate other work (for example the engineer workflow), run this step in a subagent to keep your own context small. Give it the paths to `brief.md`, `reach.md` and the review files, and the path to this skill's section 4. Ask it to return only the report path, the verdict and the blockers.
+When you also coordinate other work, run this step in a subagent to keep your own context small. Give it the paths to `brief.md`, `reach.md` and the review files, and the path to this skill's section 4. Ask it to return only the report path, the verdict and the blockers.
 
 Read every review. List every point they raise. Merge points that name the same defect at the same place. Keep the best explanation of each.
 

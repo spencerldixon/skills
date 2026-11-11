@@ -6,7 +6,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 
 | Skill | Description |
 | --- | --- |
-| [goblin](beta/goblin/) | Fixes one demonstrable developer annoyance within 20 added plus deleted lines, with no new dependencies. Uses Sonnet in Claude Code. |
+| [goblin](beta/goblin/) | Fixes one demonstrable developer annoyance within 20 added plus deleted lines, with no new dependencies. Uses Opus in Claude Code. |
 | [standup](skills/standup/) | Drafts a short daily update from verified activity, grouping work by outcome and marking inferred plans. |
 | [code-review](beta/code-review/) | Reviews a branch or diff with a context scout and two independent reviews, merges every point into one report, and gives a pass or changes-needed verdict. |
 | [find-work](beta/find-work/) | Finds up to 10 unassigned, unblocked HMRC and AI Jira tickets, rates clarity, complexity and size, and returns one ranked table to help you choose the next ticket. Read-only. |
@@ -92,7 +92,7 @@ references/             shared procedures: show-to-human, language, vault
 ## Adding a skill
 
 1. Create `skills/<name>/SKILL.md` (or `beta/<name>/SKILL.md` for experimental work) with `name` and `description` frontmatter.
-2. Copy the `## Language` section from another skill, so every skill talks to the user the same way.
+2. Add a `## Language` section that links `references/language.md`, so every skill talks to the user the same way.
 3. Add `./skills/<name>` or `./beta/<name>` to `skills` in `.claude-plugin/plugin.json`.
 4. Check the Claude Code manifest: `claude plugin validate .`
 
