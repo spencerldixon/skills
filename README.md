@@ -19,6 +19,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [find-performance-issues](beta/find-performance-issues/) | Finds why a page, endpoint, job or query is slow, explains each issue in plain English, estimates the gain with the arithmetic shown, and validates it with a measurement or an exact check to run. |
 | [watch-pr](skills/watch-pr/) | Runs under `/loop`: watches your open PRs, reruns flaky CI, fixes small blockers on PRs you authored, and reports every PR at a glance under Needs you, Ready to merge and Waiting. Never merges. |
 | [ship-it](skills/ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, and moves the ticket to In Review. |
+| [socratic-tutor](beta/socratic-tutor/) | Teaches a topic to mastery with Socratic questioning: diagnostic placement, a 0-5 skill map, spaced review and a final assessment. Use when you ask to be taught, tutored, quizzed or drilled. |
 
 ## Agents and the wiki
 
