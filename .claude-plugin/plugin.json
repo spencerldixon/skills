@@ -1,6 +1,6 @@
 {
   "name": "spencerldixon-skills",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Skills for engineering work: tickets, code review, explanations, PR summaries, shipping and PR watching",
   "author": {
     "name": "Spencer Dixon"
@@ -21,6 +21,7 @@
     "./skills/standup",
     "./beta/goblin",
     "./beta/socratic-tutor",
-    "./beta/pick-up"
+    "./beta/pick-up",
+    "./beta/babysit"
   ]
 }

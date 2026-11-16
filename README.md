@@ -7,6 +7,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | Skill | Description |
 | --- | --- |
 | [goblin](beta/goblin/) | Fixes one demonstrable developer annoyance within 20 added plus deleted lines, with no new dependencies. Uses Opus in Claude Code. |
+| [babysit](beta/babysit/) | Gets a ticket's open PRs over the line from the session that wrote them: triages review comments as fix, dismiss or ask, pushes fixes in one wave, keeps CI green, and stops at approval or a human call. `scripts/pr-wait` wakes it on new comments, reviews, CI results, conflicts or merges. Adapted from Lauren Tan's pstack. |
 | [pick-up](beta/pick-up/) | Takes one Jira ticket to open, CI-checked pull requests: questions, proof plan, worktrees, implement, verify, code-review and ship-it. You invoke it; agents do not. |
 | [standup](skills/standup/) | Drafts a short daily update from verified activity, grouping work by outcome and marking inferred plans. |
 | [code-review](beta/code-review/) | Reviews a branch or diff free-form, then gives a pass or changes-needed verdict. |
@@ -19,7 +20,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [preflight](beta/preflight/) | Checks that a repo's tools, dependencies, services, disk space and one fast spec are ready before agent work starts. |
 | [find-performance-issues](beta/find-performance-issues/) | Finds why a page, endpoint, job or query is slow, explains each issue in plain English, estimates the gain with the arithmetic shown, and validates it with a measurement or an exact check to run. |
 | [watch-pr](skills/watch-pr/) | Runs under `/loop`: watches your open PRs and PRs waiting for your review, reruns flaky CI, fixes small blockers on PRs you authored, and reports every PR at a glance under Needs you, Ready to merge, Waiting and Review requested. Never merges. |
-| [ship-it](skills/ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, moves the ticket to In Review, then waits for CI and fixes failures its change caused. |
+| [ship-it](skills/ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, moves the ticket to In Review, then babysits the pull requests. |
 | [socratic-tutor](beta/socratic-tutor/) | Teaches a topic to mastery with Socratic questioning: diagnostic placement, a 0-5 skill map, spaced review and a final assessment. Use when you ask to be taught, tutored, quizzed or drilled. |
 
 ## Agents and the wiki

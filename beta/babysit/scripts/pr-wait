@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Wait until one of the given pull requests changes in a way that needs attention,
+# then print what changed as one JSON object and exit 0.
+#
+# Wakes on: new comments or reviews from other people or bots, a review decision
+# change, CI finishing with a different result or on a new head, a new merge
+# conflict, or the PR merging or closing. A check that stays failing, such as a
+# risk-label gate, does not wake it again.
+#
+# Usage: pr-wait [--interval SECONDS] [--timeout SECONDS] PR_URL...
+set -euo pipefail
+
+interval=60
+timeout=0
+urls=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --interval) interval=$2; shift 2 ;;
+    --timeout) timeout=$2; shift 2 ;;
+    -h|--help) sed -n '2,11p' "$0"; exit 0 ;;
+    *) urls+=("$1"); shift ;;
+  esac
+done
+[ ${#urls[@]} -gt 0 ] || { echo "usage: pr-wait [--interval S] [--timeout S] PR_URL..." >&2; exit 64; }
+
+me=$(gh api user --jq .login)
+
+# Print the parts of a PR that matter for waking, as JSON.
+snapshot() {
+  local url=$1 repo num inline
+  repo=$(sed -E 's#https://github.com/([^/]+/[^/]+)/pull/.*#\1#' <<<"$url")
+  num=$(sed -E 's#.*/pull/([0-9]+).*#\1#' <<<"$url")
+  inline=$(gh api --paginate "repos/$repo/pulls/$num/comments" \
+    --jq "[.[] | select(.user.login != \"$me\") | {id: (\"inline-\" + (.id|tostring)), author: .user.login, url: .html_url, body: .body[0:200]}]" \
+    | jq -s 'add // []')
+  gh pr view "$url" --json state,mergeable,headRefOid,reviewDecision,statusCheckRollup,comments,reviews \
+    | jq --arg me "$me" --arg url "$url" --argjson inline "$inline" '{
+        url: $url, state, mergeable, head: .headRefOid, decision: .reviewDecision,
+        pending: ([.statusCheckRollup[] | select((.status // "COMPLETED") != "COMPLETED" or ((.state // "") | test("PENDING|EXPECTED")))] | length),
+        failed: ([.statusCheckRollup[] | select((.conclusion // .state // "") | test("FAILURE|ERROR|TIMED_OUT|CANCELLED|ACTION_REQUIRED")) | (.name // .context)] | unique),
+        notes: ([.comments[] | select(.author.login != $me) | {id: ("comment-" + .id), author: .author.login, url, body: .body[0:200]}]
+          + [.reviews[] | select(.author.login != $me) | {id: ("review-" + .id), author: .author.login, state, body: .body[0:200]}]
+          + $inline)
+      }'
+}
+
+# Compare two snapshots ($a before, $b now). Print an event, or nothing.
+compare() {
+  jq -n --argjson a "$1" --argjson b "$2" '
+    ($a.notes | map(.id)) as $seen
+    | ($b.notes | map(select(.id as $id | $seen | index($id) | not))) as $new
+    | [ if $b.state != $a.state then "state" else empty end,
+        if $b.mergeable == "CONFLICTING" and $a.mergeable != "CONFLICTING" then "conflict" else empty end,
+        if ($new | length) > 0 then "comments" else empty end,
+        if $b.decision != $a.decision then "review" else empty end,
+        if $b.pending == 0 and ($a.pending > 0 or $b.failed != $a.failed or $b.head != $a.head) then "ci" else empty end
+      ] as $why
+    | if ($why | length) == 0 then empty else
+        {url: $b.url, why: $why, state: $b.state, mergeable: $b.mergeable, decision: $b.decision,
+         head: $b.head, failed: $b.failed, new: $new}
+      end'
+}
+
+[ "${PR_WAIT_SELFTEST:-}" = 1 ] && return 0 2>/dev/null
+
+dir=$(mktemp -d)
+trap 'rm -r "$dir"' EXIT
+for i in "${!urls[@]}"; do snapshot "${urls[$i]}" > "$dir/$i"; done
+start=$(date +%s)
+
+while true; do
+  sleep "$interval"
+  for i in "${!urls[@]}"; do
+    now=$(snapshot "${urls[$i]}") || continue # a failed gh call is retried on the next poll
+    event=$(compare "$(cat "$dir/$i")" "$now")
+    if [ -n "$event" ]; then echo "$event"; exit 0; fi
+  done
+  if [ "$timeout" -gt 0 ] && [ $(( $(date +%s) - start )) -ge "$timeout" ]; then
+    echo '{"why":["timeout"]}'
+    exit 0
+  fi
+done

@@ -15,7 +15,7 @@ Take the ticket the user names from Jira to open pull requests. Invoking this sk
 5. **Implement.** Make the change the ticket asks for. Note other problems you find for the report, and leave them unfixed.
 6. **Verify.** Run every check from step 3, following the repo and workspace `AGENTS.md`. Done when each check passes and you have its output. Put the proof in the pull request description.
 7. **Review.** Run the [code-review](../code-review/SKILL.md) skill on each worktree's diff. Fix every changes-needed finding, then run step 6 again.
-8. **Ship.** Run the [ship-it](../../skills/ship-it/SKILL.md) skill from the worktrees.
-9. **Clean up.** Stop containers and services you started, and drop test databases you created. Keep the worktrees: review comments come back to this session.
+8. **Clean up.** Stop containers and services you started, and drop test databases you created. Keep the worktrees for review fixes.
+9. **Ship.** Run the [ship-it](../../skills/ship-it/SKILL.md) skill from the worktrees. It ends by babysitting the pull requests in this session.
 
-End with ship-it's report, then one line for each problem noted in step 5.
+End with the babysit report, then one line for each problem noted in step 5.
