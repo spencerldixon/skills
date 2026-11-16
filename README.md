@@ -7,6 +7,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | Skill | Description |
 | --- | --- |
 | [goblin](beta/goblin/) | Fixes one demonstrable developer annoyance within 20 added plus deleted lines, with no new dependencies. Uses Opus in Claude Code. |
+| [pick-up](beta/pick-up/) | Takes one Jira ticket to open, CI-checked pull requests: questions, proof plan, worktrees, implement, verify, code-review and ship-it. You invoke it; agents do not. |
 | [standup](skills/standup/) | Drafts a short daily update from verified activity, grouping work by outcome and marking inferred plans. |
 | [code-review](beta/code-review/) | Reviews a branch or diff free-form, then gives a pass or changes-needed verdict. |
 | [find-work](beta/find-work/) | Finds up to 10 unassigned, unblocked HMRC, AI and MYOTT (board 291) Jira tickets, rates clarity, complexity and size, and returns one ranked table to help you choose the next ticket. Read-only. |
@@ -17,8 +18,8 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | [walkthrough](skills/walkthrough/) | Writes a short human check for a browser, native application, or API, with exact actions and visible results. |
 | [preflight](beta/preflight/) | Checks that a repo's tools, dependencies, services, disk space and one fast spec are ready before agent work starts. |
 | [find-performance-issues](beta/find-performance-issues/) | Finds why a page, endpoint, job or query is slow, explains each issue in plain English, estimates the gain with the arithmetic shown, and validates it with a measurement or an exact check to run. |
-| [watch-pr](skills/watch-pr/) | Runs under `/loop`: watches your open PRs, reruns flaky CI, fixes small blockers on PRs you authored, and reports every PR at a glance under Needs you, Ready to merge and Waiting. Never merges. |
-| [ship-it](skills/ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, and moves the ticket to In Review. |
+| [watch-pr](skills/watch-pr/) | Runs under `/loop`: watches your open PRs and PRs waiting for your review, reruns flaky CI, fixes small blockers on PRs you authored, and reports every PR at a glance under Needs you, Ready to merge, Waiting and Review requested. Never merges. |
+| [ship-it](skills/ship-it/) | Commits your local work, pushes it, opens a pull request in each changed repo with `pr-summary`, comments the links on the Jira ticket once, moves the ticket to In Review, then waits for CI and fixes failures its change caused. |
 | [socratic-tutor](beta/socratic-tutor/) | Teaches a topic to mastery with Socratic questioning: diagnostic placement, a 0-5 skill map, spaced review and a final assessment. Use when you ask to be taught, tutored, quizzed or drilled. |
 
 ## Agents and the wiki
@@ -28,10 +29,6 @@ Skills for engineering work, for Claude Code, Codex and pi.
 ### Customising the agents
 
 `standup` uses `model: sonnet` in Claude Code. For OpenAI runtimes, prefer Sol when selecting the session or worker model; the Claude Code frontmatter does not configure those runtimes.
-
-[`agents/fixer.md`](agents/fixer.md) holds the fixer role. It gets `Read, Edit, Grep, Glob, Bash, Write`; front matter sets Claude Code model `opus` and effort `medium`. Other runtimes ignore these fields; configure comparable models there.
-
-Pi uses lowercase tool names, so pi needs its own copy of `fixer.md` in `~/.pi/agent/agents/`.
 
 Keep repository-specific commands and conventions in each repo's `AGENTS.md`.
 

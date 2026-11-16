@@ -4,6 +4,12 @@
 
 ## Latest run
 
+2026-11-16, `claude-opus-5-5`, with the skill only, one run per case, after three fixes: scope found afresh each run (no self-stop), review requests reported but never acted on, and fixes made in a worktree where no fixer agent exists. All 15 cases passed, including the new review-requested and empty-keeps-watching cases. empty-keeps-watching first failed on a fixture that named PR 12 as the scope; the fixture now says no scope was given, and the rerun passed. Scored by the agent that edited the skill; no baseline rerun.
+
+The fixer agent was then removed and three of its rules folded into the skill: check a finding against the code first, run only the covering specs, remove the worktree. small-fix-delegated, big-change-escalates and untrusted-comment were rerun and passed.
+
+## Earlier run
+
 2026-11-04, `claude-opus-5-5`, one run per case, with and without the skill, with the grouped report format in the body. These are tabletop decisions, not live PR runs. Tools were disabled and fixtures were authoritative.
 
 | Case | With skill | No skill |

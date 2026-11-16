@@ -15,7 +15,7 @@ Use the GitHub MCP for pull requests (else `gh`) and the Jira (Atlassian) MCP fo
 - **Repositories:** the current one, plus any the user names or you changed for this ticket in this session. Skip a repository with no uncommitted changes and no commits ahead of its default branch.
 - **Repository requirements:** read each repository's instructions (`AGENTS.md`, `CLAUDE.md`) and pull request template for its PR title format, description template, commit format and risk label rules. When none are stated, the `pr-summary` defaults apply.
 
-Do steps 2 to 4 for each repository. Do step 5 once, after every pull request is open.
+Do steps 2 to 4 for each repository. Do step 5 once, after every pull request is open. Then do step 6 for each pull request.
 
 ## 2. Branch
 
@@ -67,13 +67,23 @@ With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it ag
    If the comment tool returns an error, make no retry, so no role or group value is ever guessed. Keep the comment text for the report, then go to step 2. If the write outcome is uncertain, read the comments back before reporting. Some models fill every optional field and Jira rejects the empty visibility role, so the user posts the comment by hand.
 2. Move the ticket to **In Review** or equivalent review status, whether or not the comment posted. Get the ticket's available transitions and use the one whose target status is In Review or Review. Never guess a transition ID. If the ticket is already In Review or past it, such as Done, skip this. If no transition leads there, leave the status and report the transitions that are available.
 
-## 6. Report
+## 6. Wait for CI
+
+You wrote this change, so you are best placed to fix its CI. For each pull request, wait for its checks on the current head with `gh pr checks <url> --watch`.
+
+- **Green:** done.
+- **Failed because of this change**, such as a spec, lint or type error in code you touched: fix it, commit and push, then wait again. Stop after two fix rounds.
+- **Failed for another reason**, such as a network error, a lost runner or a failure in code you did not touch: rerun the check once. If it fails again, stop.
+
+With `--draft`, skip this step. Report each pull request's final CI state, and any check still failing with its cause.
+
+## 7. Report
 
 End with only this:
 
 ```markdown
 **Pull requests**
-- <repository name>: <pull request URL>
+- <repository name>: <pull request URL> (CI: <green, or failing check and cause>)
 
 **Jira:** https://transformuk.atlassian.net/browse/<KEY> (moved to <STATUS>)
 ```
