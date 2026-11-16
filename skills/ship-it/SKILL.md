@@ -64,8 +64,8 @@ With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it ag
 
    Write each URL as a Markdown link, as shown. Jira does not turn a bare URL into a link. With several pull requests, write one sentence for the whole change and list every pull request, one per line. Post one comment, never one per repository. If the ticket already has a comment with these links, do not post again.
 
-   On a validation error, inspect the failed request, field error and server schema. Make at most one corrected retry; never guess role or group values. If the write outcome is uncertain, read the comments before retrying to avoid duplicates. Read the comments back and confirm the PR links exist before moving the ticket or reporting success. If verification fails, stop and report.
-2. Move the ticket to **In Review** or equivalent review status. Get the ticket's available transitions and use the one whose target status is In Review or Review. Never guess a transition ID. If the ticket is already In Review, skip this. If no transition leads there, leave the status and report the transitions that are available.
+   If the comment tool returns an error, make no retry, so no role or group value is ever guessed. Keep the comment text for the report, then go to step 2. If the write outcome is uncertain, read the comments back before reporting. Some models fill every optional field and Jira rejects the empty visibility role, so the user posts the comment by hand.
+2. Move the ticket to **In Review** or equivalent review status, whether or not the comment posted. Get the ticket's available transitions and use the one whose target status is In Review or Review. Never guess a transition ID. If the ticket is already In Review or past it, such as Done, skip this. If no transition leads there, leave the status and report the transitions that are available.
 
 ## 6. Report
 
@@ -78,7 +78,7 @@ End with only this:
 **Jira:** https://transformuk.atlassian.net/browse/<KEY> (moved to <STATUS>)
 ```
 
-Replace `moved to <STATUS>` with the reason when the ticket did not move. Add one line for anything left out, such as uncommitted unrelated changes or skipped repositories.
+Replace `moved to <STATUS>` with the reason when the ticket did not move. When the comment did not post, add a line `**Jira comment not posted** (<error>). Paste this:` followed by the comment text in a fenced block. Add one line for anything left out, such as uncommitted unrelated changes or skipped repositories.
 
 ## Language
 
