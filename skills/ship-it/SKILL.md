@@ -54,7 +54,7 @@ With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it ag
 
 ## 5. Update Jira once
 
-1. Add one unrestricted comment with only `cloudId`, `issueIdOrKey`, `commentBody` and `contentFormat: "markdown"`. Omit `commentVisibility` and `commentId`; empty strings or objects are not substitutes for omission. If the direct tool requires these optional fields, use an existing MCP client call path that preserves omission. If none is available, stop and report the schema limitation. Use this comment shape:
+1. Add one unrestricted comment with the Jira comment tool, passing only `cloudId`, `issueIdOrKey`, `commentBody` and `contentFormat: "markdown"`. Leave `commentVisibility` and `commentId` out. Work through the harness's Jira tools only: credential and token files stay unread. Use this comment shape:
 
    ```markdown
    <One sentence that says what the pull request does.>
