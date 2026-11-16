@@ -8,7 +8,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 | --- | --- |
 | [goblin](beta/goblin/) | Fixes one demonstrable developer annoyance within 20 added plus deleted lines, with no new dependencies. Uses Opus in Claude Code. |
 | [standup](skills/standup/) | Drafts a short daily update from verified activity, grouping work by outcome and marking inferred plans. |
-| [code-review](beta/code-review/) | Reviews a branch or diff with a context scout and two independent reviews, merges every point into one report, and gives a pass or changes-needed verdict. |
+| [code-review](beta/code-review/) | Reviews a branch or diff free-form, then gives a pass or changes-needed verdict. |
 | [find-work](beta/find-work/) | Finds up to 10 unassigned, unblocked HMRC, AI and MYOTT (board 291) Jira tickets, rates clarity, complexity and size, and returns one ranked table to help you choose the next ticket. Read-only. |
 | [write-ticket](skills/write-ticket/) | Interviews you, researches the relevant code, and writes a clear Jira ticket following the included ticket template. |
 | [create-ticket](skills/create-ticket/) | Drafts and creates a Jira ticket with a verified destination and relevant parent. Defaults Trade Tariff work to HMRC Tasks in To Do. |
@@ -31,7 +31,7 @@ Skills for engineering work, for Claude Code, Codex and pi.
 
 [`agents/fixer.md`](agents/fixer.md) holds the fixer role. It gets `Read, Edit, Grep, Glob, Bash, Write`; front matter sets Claude Code model `opus` and effort `medium`. Other runtimes ignore these fields; configure comparable models there.
 
-`code-review` uses general-purpose subagents to collect facts and run independent, free-form reviews. They use read-only commands and write only their assigned report. The skill supplies their task instructions directly. Pi uses lowercase tool names, so pi needs its own copy of `fixer.md` in `~/.pi/agent/agents/`.
+Pi uses lowercase tool names, so pi needs its own copy of `fixer.md` in `~/.pi/agent/agents/`.
 
 Keep repository-specific commands and conventions in each repo's `AGENTS.md`.
 
