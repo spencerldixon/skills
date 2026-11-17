@@ -1,6 +1,6 @@
 {
   "name": "spencerldixon-skills",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "description": "Skills for engineering work: tickets, code review, explanations, PR summaries, shipping and PR watching",
   "private": true,
   "keywords": [

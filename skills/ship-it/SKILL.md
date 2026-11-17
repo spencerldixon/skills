@@ -5,7 +5,7 @@ description: Ship finished local work for review across one or more repositories
 
 # Ship it
 
-Turn the local work for a ticket into open pull requests, then tell Jira. Invoking this skill authorizes committing, pushing, opening pull requests, commenting on the ticket and moving it; add no other confirmation gate. Stop and ask only where this skill says so, after opening the scope or conflict document per [show-to-human.md](../../references/show-to-human.md).
+Turn the local work for a ticket into open pull requests, then tell Jira. Invoking this skill authorizes committing, pushing, opening pull requests, assigning the ticket to Spencer Dixon, commenting on it and moving it; add no other confirmation gate. Stop and ask only where this skill says so, after opening the scope or conflict document per [show-to-human.md](../../references/show-to-human.md).
 
 Use the GitHub MCP for pull requests (else `gh`) and the Jira (Atlassian) MCP for the ticket, loading deferred tools with tool search. The Jira site is `https://transformuk.atlassian.net`.
 
@@ -37,7 +37,7 @@ Find the default branch with `git symbolic-ref --short refs/remotes/origin/HEAD`
 ## 4. Push and open the pull request
 
 1. Run `git push -u origin <branch>`. Never force push. If the push is rejected, stop and report.
-2. Look for an open pull request from this branch. If one exists, reuse its URL and do not open another.
+2. Look for an open pull request from this branch. If one exists, reuse its URL and do not open another. Without `--draft`, mark a reused draft ready for review. Read back its draft state so the Jira update reflects the actual PR state.
 3. Otherwise, use the `pr-summary` skill (`../pr-summary/SKILL.md` from this file) on this branch against the default branch. Give it the ticket key, the ticket URL (`https://transformuk.atlassian.net/browse/<KEY>`), and the repository's title, template and risk requirements from step 1. Explicitly use those requirements instead of conflicting `pr-summary` defaults.
 4. Take the title from its `text` block and the description from its `markdown` block. Check both against the repository requirements before publishing; correct any mismatch. Send only the content inside the fences, never the fences.
 5. Open the pull request with the GitHub MCP: owner and repo from `git remote get-url origin`, head is the branch, base is the default branch, not a draft. With `gh`, write the description to a file in the scratchpad and run `gh pr create --base <default> --title "<title>" --body-file <file>`. With `--draft`, open it as a draft (`--draft` for `gh`).
@@ -50,11 +50,12 @@ Find the default branch with `git symbolic-ref --short refs/remotes/origin/HEAD`
 
 If any repository fails in steps 2 to 4, stop before step 5 and report what was done. A second run reuses the pushed branches and open pull requests.
 
-With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it again without `--draft`. In the report, write "not updated: draft" in place of the Jira status.
+Run step 5 for both draft and ready-for-review pull requests.
 
 ## 5. Update Jira once
 
-1. Add one unrestricted comment with the Jira comment tool, passing only `cloudId`, `issueIdOrKey`, `commentBody` and `contentFormat: "markdown"`. Leave `commentVisibility` and `commentId` out. Work through the harness's Jira tools only: credential and token files stay unread. Use this comment shape:
+1. Assign the ticket to **Spencer Dixon**. If someone else owns it, stop and ask before reassigning. Resolve Spencer's Jira account with the Jira tools rather than guessing an account ID. Read the ticket back and verify the assignee before proceeding.
+2. Add one unrestricted comment with the Jira comment tool, passing only `cloudId`, `issueIdOrKey`, `commentBody` and `contentFormat: "markdown"`. Leave `commentVisibility` and `commentId` out. Work through the harness's Jira tools only: credential and token files stay unread. Use this comment shape:
 
    ```markdown
    <One sentence that says what the pull request does.>
@@ -64,8 +65,8 @@ With `--draft`, skip step 5. Jira stays unchanged until the user runs ship-it ag
 
    Write each URL as a Markdown link, as shown. Jira does not turn a bare URL into a link. With several pull requests, write one sentence for the whole change and list every pull request, one per line. Post one comment, never one per repository. If the ticket already has a comment with these links, do not post again.
 
-   If the comment tool returns an error, make no retry, so no role or group value is ever guessed. Keep the comment text for the report, then go to step 2. If the write outcome is uncertain, read the comments back before reporting. Some models fill every optional field and Jira rejects the empty visibility role, so the user posts the comment by hand.
-2. Move the ticket to **In Review** or equivalent review status, whether or not the comment posted. Get the ticket's available transitions and use the one whose target status is In Review or Review. Never guess a transition ID. If the ticket is already In Review or past it, such as Done, skip this. If no transition leads there, leave the status and report the transitions that are available.
+   If the comment tool returns an error, make no retry, so no role or group value is ever guessed. Keep the comment text for the report, then go to step 3. If the write outcome is uncertain, read the comments back before reporting. Some models fill every optional field and Jira rejects the empty visibility role, so the user posts the comment by hand.
+3. Update the status whether or not the comment posted: **In Progress** (or equivalent active-work status) when all the ticket's open PRs are drafts; **In Review** (or equivalent review status) when any is ready for review. Use the actual PR states, including reused PRs. Get the ticket's available transitions and select by target status; never guess a transition ID. If the equivalent is ambiguous, ask. Keep an existing target or later status, such as Done, rather than moving the ticket backwards. If no transition leads to the target, leave the status and report the available transitions. Read the ticket back and verify both that Spencer Dixon is the assignee and that the status is correct; report any update that failed.
 
 ## 6. Report
 
@@ -75,10 +76,10 @@ Report with only this:
 **Pull requests**
 - <repository name>: <pull request URL>
 
-**Jira:** https://transformuk.atlassian.net/browse/<KEY> (moved to <STATUS>)
+**Jira:** https://transformuk.atlassian.net/browse/<KEY> (assigned to Spencer Dixon; moved to <STATUS>)
 ```
 
-Replace `moved to <STATUS>` with the reason when the ticket did not move. When the comment did not post, add a line `**Jira comment not posted** (<error>). Paste this:` followed by the comment text in a fenced block. Add one line for anything left out, such as uncommitted unrelated changes or skipped repositories.
+Report the verified assignee and status. Replace either update claim with the reason when it did not happen. When the comment did not post, add a line `**Jira comment not posted** (<error>). Paste this:` followed by the comment text in a fenced block. Add one line for anything left out, such as uncommitted unrelated changes or skipped repositories.
 
 ## 7. Babysit
 
